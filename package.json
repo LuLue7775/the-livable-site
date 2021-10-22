@@ -6,15 +6,46 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "analyze": "cross-env ANALYZE=true next build",
+    "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
+    "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.16",
+    "@next/bundle-analyzer": "^11.1.2",
+    "@stripe/stripe-js": "^1.14.0",
+    "@svgr/cli": "^5.5.0",
+    "@woocommerce/woocommerce-rest-api": "^1.0.1",
+    "axios": "^0.23.0",
+    "classnames": "^2.3.1",
+    "cross-env": "^7.0.3",
+    "graphql": "^15.4.0",
+    "lodash": "^4.17.20",
+    "micro": "^9.3.4",
     "next": "11.1.2",
+    "next-auth": "^3.29.0",
+    "next-stripe": "^1.0.0-beta.1",
+    "node-fetch": "^3.0.0",
+    "nprogress": "^0.2.0",
+    "prop-types": "^15.7.2",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-swipeable": "^6.2.0",
+    "sass": "^1.29.0",
+    "stripe": "^8.148.0",
+    "uuid": "^8.3.1",
+    "validator": "^13.1.17"
   },
   "devDependencies": {
     "eslint": "8.0.1",
-    "eslint-config-next": "11.1.2"
+    "eslint-config-next": "11.1.2",
+    "install": "^0.13.0",
+    "postcss-flexbugs-fixes": "^5.0.1",
+    "postcss-import": "^14.0.2",
+    "postcss-preset-env": "^6.7.0",
+    "precss": "^4.0.0",
+    "stylelint-config-recommended": "^6.0.0",
+    "tailwindcss": "^2.2.17",
+    "tailwindcss-text-fill-stroke": "^1.1.2"
   }
 }
