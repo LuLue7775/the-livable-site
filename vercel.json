@@ -1,0 +1,10 @@
+{
+    "version": 2,
+    "name": "the-livable-site",
+    "alias": "the-livable-site",    
+    "builds": [
+      { "src": "package.json", "use": "@vercel/next" }
+
+    ]
+}
+
