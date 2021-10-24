@@ -27,38 +27,6 @@ GET_JOURNAL($subslug: ID!) {
       }
     }
   }
-
-  shop: productCategory(id: "75", idType: DATABASE_ID) {
-    databaseId
-    name
-    slug
-    children {
-        nodes {
-            name
-            slug
-        }
-    }
-  }
-  workshop: productCategory(id: "72", idType: DATABASE_ID) {
-      databaseId
-      name
-      slug
-      children {
-          nodes {
-              name
-              slug
-          }
-      }
-  }
-  journal: categories {
-      nodes {
-          name
-          slug
-          databaseId
-      }
-  }
-
-
 }`;
 
 export const GET_JOURNAL_ITEMS = gql` query 
@@ -89,36 +57,7 @@ GET_JOURNAL_ITEMS($slug: ID!) {
         }
       }
     }
-  
-  shop: productCategory(id: "75", idType: DATABASE_ID) {
-      databaseId
-      name
-      slug
-      children {
-          nodes {
-              name
-              slug
-          }
-      }
-  }
-  workshop: productCategory(id: "72", idType: DATABASE_ID) {
-      databaseId
-      name
-      slug
-      children {
-          nodes {
-              name
-              slug
-          }
-      }
-  }
-  journal: categories {
-      nodes {
-          name
-          slug
-          databaseId
-      }
-  }
+
 }
 `;
 
@@ -148,28 +87,6 @@ query GET_JOURNAL_CATS {
     }
   }
 
-  shop: productCategory(id: "75", idType: DATABASE_ID) {
-    databaseId
-    name
-    slug
-    children {
-        nodes {
-            name
-            slug
-        }
-    }
-  }
-  workshop: productCategory(id: "72", idType: DATABASE_ID) {
-      databaseId
-      name
-      slug
-      children {
-          nodes {
-              name
-              slug
-          }
-      }
-  }
   journal: categories {
       nodes {
           name

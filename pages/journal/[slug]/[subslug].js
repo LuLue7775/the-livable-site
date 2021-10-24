@@ -7,16 +7,11 @@ import { useEffect, useRef, useState, useContext } from "react";
 import { MenuContext } from '../../../src/components/context/AppContext';
 import JournalSingleElements from "../../../src/components/journal/JournalSingleElements";
 
-export default function JournalSingle( props ) {
-    const router = useRouter()
-
-    // If the page is not yet generated, this will be displayed
-    // initially until getStaticProps() finishes running
+export default function JournalSingle( { journalCategory, journal } ) {
+    const router = useRouter();
     if (router.isFallback) {
         return <div>Loading...</div>
-    }
-
-    const { journalCategory, journal, menu } = props; 
+    };
 
     const [ isBackClicked, setBackClicked ] = useState(null);
 
@@ -73,7 +68,7 @@ export default function JournalSingle( props ) {
                 <ImageBG src='/bg.jpg' alt="background" layout="fill" />
             </div>
             <div className="relative z-60 ">
-                <Header menu={ menu }/> 
+                <Header/> 
             </div>
 
             
@@ -102,12 +97,6 @@ export async function getStaticProps(context) {
         props: {
             journalCategory: slug ?? '',
             journal: data?.post ?? '',
-            menu: 
-			[ 
-				[ data?.shop ? data.shop : [] ] ,
-				[ data?.workshop ? data.workshop : [] ] ,
-				[ data?.journal ? data.journal : [] ] ,				
-			]
         },
         revalidate: 30
     }

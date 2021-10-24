@@ -1,5 +1,5 @@
 
-const SubcatImageBorder = () => {
+const JournalCatsImageBorder = () => {
     return (
     <div className="subcat-image-borders w-5/4 ">
         <div className="subcat-image-border1 absolute w-px opacity-25 bg-black left-1/4 "></div>
@@ -8,4 +8,4 @@ const SubcatImageBorder = () => {
     </div>
     )
 }
-export default SubcatImageBorder;
+export default JournalCatsImageBorder;

@@ -4,13 +4,11 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { GET_JOURNAL_CATS } from "../../src/queries/get-journal-items";
 import useScreenSize from "../../src/utils/useScreenSize";
-import SubcatContainer from "../../src/components/category_journal/SubcatContainer";
+import JournalCatsContainer from "../../src/components/journal/JournalCatsContainer";
 
 export default function Journal( { data, slug, menu } ) {
     const router = useRouter()
 
-    // If the page is not yet generated, this will be displayed
-    // initially until getStaticProps() finishes running
     if (router.isFallback) {
         return <div>Loading...</div>
     }
@@ -38,10 +36,10 @@ export default function Journal( { data, slug, menu } ) {
     return (
         <>  
             <div className="relative z-80 ">
-                <Header menu={ menu }/>
+                <Header/>
             </div>
 
-            <SubcatContainer data={data} slug={slug} menu={menu} 
+            <JournalCatsContainer data={data} slug={slug} menu={menu} 
                     screenSize={screenSize} imageHeight={imageHeight} imageBottom={imageBottom} imageMovement={imageMovement} />
 
         </>
@@ -59,12 +57,7 @@ export async function getStaticProps() {
             journalCategories: data?.categories?.nodes ?? [],
             data: data ?? [],
             slug: "journal",
-            menu: 
-			[ 
-				[ data?.shop ? data.shop : [] ] ,
-				[ data?.workshop ? data.workshop : [] ] ,
-				[ data?.journal ? data.journal : [] ] ,				
-			] ?? []
+            menu: data?.journal ? data.journal : []
         },
         revalidate: 10
     }

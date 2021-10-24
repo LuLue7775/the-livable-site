@@ -66,35 +66,6 @@ query GET_SUBCATEGORIES_ITEMS($subslug: ID!) {
 			}
 	    }
 	}
-	shop: productCategory(id: "75", idType: DATABASE_ID) {
-        databaseId
-        name
-        slug
-        children {
-            nodes {
-                name
-                slug
-            }
-        }
-    }
-    workshop: productCategory(id: "72", idType: DATABASE_ID) {
-        databaseId
-        name
-        slug
-        children {
-            nodes {
-                name
-                slug
-            }
-        }
-    }
-    journal: categories {
-        nodes {
-            name
-            slug
-            databaseId
-        }
-    }
   }
 `;
 

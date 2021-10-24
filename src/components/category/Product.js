@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import Price from "./single-product/price";
-import Image from "../image";
-import {DEFAULT_PRODUCT_HOME_IMG_URL} from "../constants/urls";
+import Price from '../single-product/price';
+import Image from "../../image";
+import {DEFAULT_PRODUCT_HOME_IMG_URL} from "../../constants/urls";
 import { isEmpty } from 'lodash';
 import { useEffect, useRef } from 'react';
 
@@ -14,16 +14,15 @@ const Product = ( props ) => {
             productsRefs.current.push(el);
         }
     };
+
+
 	useEffect(()=> {
 		gsap.registerPlugin(ScrollTrigger);
-	},[]);
 
-
-	useEffect(()=> {
 		productsRefs.current.forEach( ( product ) => {
-			gsap.from( product, {
-				autoAlpha:0,
-                duration:1,
+			gsap.to( product,  {
+				opacity:1,
+				duration:0.1,
                 ease:"power2",
 				scrollTrigger: {
 					trigger: product,
@@ -31,15 +30,14 @@ const Product = ( props ) => {
 					end:"bottom+=200 bottom",
 					scrub:1,
 				}
-			
-            });
+			});
 		});
 	}, [productsRefs.current]);
 
 
 	return (
 		undefined !== product && 'GroupProduct' !== product.__typename ? (
-			<div ref={addProductsToRef} className="product mb-10 m-auto">
+			<div ref={addProductsToRef} className="product mb-10 m-auto ">
 				<div className="relative h-700px w-screen md:w-450px">
 				<Link href={ `/product/${ product?.slug }`} >
 					<a className="group ">

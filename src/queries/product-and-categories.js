@@ -4,36 +4,6 @@ import { gql } from "@apollo/client";
  * GraphQL categories and products query.
  */
 const PRODUCTS_AND_CATEGORIES_QUERY = gql`query {
-  shop: productCategory(id: "75", idType: DATABASE_ID) {
-    databaseId
-    name
-    slug
-    children {
-        nodes {
-            name
-            slug
-        }
-    }
-  }
-  workshop: productCategory(id: "72", idType: DATABASE_ID) {
-      databaseId
-      name
-      slug
-      children {
-          nodes {
-              name
-              slug
-          }
-      }
-  }
-  journal: categories {
-      nodes {
-          name
-          slug
-          databaseId
-      }
-  }
-  
   heroCarousel: productCategories(where: {slug: "offers"}) {
     nodes {
       id

@@ -7,9 +7,8 @@ import { useRef, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
 import { MenuContext } from "../src/components/context/AppContext";
 
-const Cart = ( props ) => {
+const Cart = ( ) => {
 
-	const { menu } = props || {};
 	const router = useRouter()
 
 
@@ -35,7 +34,7 @@ const Cart = ( props ) => {
             	<Image src='/bg.jpg' alt="background" layout="fill" />
             </div>
             <div className="relative z-50 ">
-                <Header menu={ menu } />
+                <Header/>
             </div>		
 			<div ref={background} className="absolute z-30 left-0 right-0">
 				<CartItemsContainer/>
@@ -46,23 +45,3 @@ const Cart = ( props ) => {
 };
 
 export default Cart;
-
-export async function getStaticProps () {
-
-	const { data } = await client.query( {
-		query: SUBCATEGORIES,
-	} );
-
-	return {
-		props: {
-			menu: 
-			[ 
-				[ data?.shop ? data.shop : [] ] ,
-				[ data?.workshop ? data.workshop : [] ] ,
-				[ data?.journal ? data.journal : [] ] ,				
-			] ?? []
-		},
-		revalidate: 1
-	}
-
-};

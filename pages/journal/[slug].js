@@ -10,35 +10,14 @@ import { MenuContext } from "../../src/components/context/AppContext";
 
 import JournalSubcat from "../../src/components/journal";
 
-export default function JournalSubcats( props ) {
+/** url: /journal/materials/ */
+export default function JournalSubcats( { journalCategory, journalCategorySlug, journals } ) {
 
     const router = useRouter()
 
     if (router.isFallback) {
         return <div>Loading...</div>
     }
-
-    const { journalCategory, journalCategorySlug, journals, menu } = props; 
-    
-
-
-
-/** SCROLL EFFECT */
-    // useEffect(()=>{
-        
-    //     let tl1 = gsap.timeline();
-
-    //     postRef.current.forEach( ( item, i ) => {
-    //         tl1.to( item , {                
-    //             x:() => {return `-=${window.innerWidth/10}`},
-    //             y:() => {return `-=${window.innerHeight/6}`},
-    //             duration: 1,
-    //             scale: 1.2, ease: "expoScale(1, 1.2)"
-    //         },0);
-    //     });
-        
-    // }, []);
-
 
     const postRef = useRef([]);
     const addToPostsRef = (el) => {
@@ -71,7 +50,7 @@ export default function JournalSubcats( props ) {
                 <ImageBG src='/bg.jpg' alt="background" layout="fill" />
             </div>
             <div className="relative z-60 ">
-                <Header menu={ menu }/>
+                <Header/>
             </div>
 
 
@@ -109,12 +88,6 @@ export async function getStaticProps(context) {
             journalCategory: data?.category?.name ?? '',
             journalCategorySlug: data?.category?.slug ?? '',
             journals: data?.category?.posts?.nodes ?? [],
-            menu: 
-			[ 
-				[ data?.shop ? data.shop : [] ] ,
-				[ data?.workshop ? data.workshop : [] ] ,
-				[ data?.journal ? data.journal : [] ] ,				
-			]
         },
         revalidate: 10
     }

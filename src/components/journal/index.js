@@ -28,7 +28,8 @@ const JournalSubcat = ({journal, i, journalCategory, journalCategorySlug}) => {
                 </div> 
                 <div className=" grid row-span-2 right-0 ">
                     <Image   
-                            className={`rounded-tl-full object-cover`}
+                            className={`rounded-tl-full`}
+                            layout={`fill`}
                             loading={ i === 0 ? "eager" : "lazy" }                                                        
                             sourceUrl={ journal?.featuredImage?.node?.sourceUrl ?? '' }
                             // placeholder="blur"

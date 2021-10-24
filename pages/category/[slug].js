@@ -1,50 +1,50 @@
 import client from "../../src/components/ApolloClient";
+import Image from 'next/image';
 import { SUBCATS_BY_SLUG } from "../../src/queries/subcats-by-slug";
 import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import Header from "../../src/components/Header";
-import useScreenSize  from "../../src/utils/useScreenSize";
-import SubcatContainer from "../../src/components/category_journal/SubcatContainer";
+import { MenuContext } from "../../src/components/context/AppContext";
+import LoadProducts from "../../src/components/category/LoadProducts";
 
-export default function CategorySingle( { data, slug, menu } ) {
-
+export default function CategorySingle( { items } ) {
     const router = useRouter()
 
-    // If the page is not yet generated, this will be displayed
-    // initially until getStaticProps() finishes running
     if (router.isFallback) {
         return <div>Loading...</div>
     }
 
-/** 
- *   AFTER PAGE LOADED, CALCULATE MOVEMENT VALUE FOR GSAP TO USE, WHICH DOES'T REQUIRE PRE-RENDERED 
- *   BUT RELOAD THE PAGE IF RESIZED AGAIN. 
- */
-    const screenSize = useScreenSize();
-
-    const [imageHeight, setImageHeight ] = useState(null);
-    const [imageBottom, setImageBottom ] = useState(null);
-    const [imageMovement, setImageMovement ] = useState(null);
-    useEffect(() => {
-
-        const imgHeightRef = document.getElementById("img");
-        setImageHeight(imgHeightRef.offsetHeight*0.8);
-        setImageBottom(screenSize.height) ;
-        setImageMovement(screenSize.height*0.8);
-
-        return () => router.reload();
-    }, [screenSize]);
-
+/**
+ *  BLURRY BG WHEN MENU CLICKED
+ */    
+ const background = useRef(null);
+ const [ isMenuVisible, setMenuVisibility ] = useContext( MenuContext );
+ useEffect(()=> {
+     if (isMenuVisible) {
+         background.current.className += (' blur-bg');
+     } else {
+         background.current.className = "product-categories grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 mt-24"
+     }
+ }, [isMenuVisible]);
 
     return (
         <>  
             <div className="relative z-80 ">
-                <Header menu={ menu }/>
+                <Header/>
             </div>
+            <div className="fixed top-0 w-reset-screen h-screen opacity-50 z-0"> 
+                <Image src='/bg.jpg' alt="background" layout="fill" />
+            </div>
+            <div className="product-categories-container container relative m-auto z-10 pt-8 w-reset-screen sm:px-4">
+                <div  ref={background} className="blur-bg product-categories grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 mt-24 " >
+                    { undefined !== items && items.products?.nodes?.length ? (
 
-            <SubcatContainer data={data} slug={slug} menu={menu} 
-                    screenSize={screenSize} imageHeight={imageHeight} imageBottom={imageBottom} imageMovement={imageMovement} />
+                        <LoadProducts items={items}/>
 
+                    ) : ''}
+                </div>
+                <div className="h-300px" /> {/** space for load more */}
+            </div>
         </>
 
     )
@@ -56,19 +56,16 @@ export async function getStaticProps(context) {
 
     const {data} = await client.query(({
         query: SUBCATS_BY_SLUG,
-        variables: { slug }
+        variables: { 
+            slug,
+            first: 10,
+			after: null, 
+        }
     }));
 
     return {
         props: {
-            data: data ?? [],
-            slug: slug,  
-            menu: 
-			[ 
-				[ data?.shop ? data.shop : [] ] ,
-				[ data?.workshops ? data.workshops : [] ] ,
-				[ data?.journal ? data.journal : [] ] ,				
-			] ?? []
+            items: data.productCategory,
         },
         revalidate: 10
     }

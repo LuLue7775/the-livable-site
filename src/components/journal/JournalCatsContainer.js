@@ -1,17 +1,16 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, useContext } from "react";
-import SubcatImage from "./SubcatImage";
+import JournalCatsImage from "./JorunalCatsImage";
+import JournalCatsImageBorder from "./JorunalCatsImageBorder";
 import ArrowSm from "../svg-icons/ArrowSm";
 import { useSwipeable } from "react-swipeable";
 import { MenuContext } from "../context/AppContext";
-import SubcatImageBorder from "./SubcatImageBorder";
+import { MobileDeviceContext } from "../context/AppContext";
 
-const SubcatContainer = ({ data, slug, menu, screenSize, imageHeight, imageBottom, imageMovement }) => {
-    if ( slug !== 'journal' ) {
-        var subcatsData = data[slug]?.children?.nodes;
-    } else {
-        var subcatsData = data?.categories?.nodes;
-    }
+/** url: /journal */
+const JournalCatsContainer = ({ data, screenSize, imageHeight, imageBottom, imageMovement }) => {
+
+    const subcatsData = data?.categories?.nodes;
 
     const [ scrollState, setScrollState ] = useState(null); 
     const [ scrollPage, setscrollPage ] = useState(0); 
@@ -64,7 +63,7 @@ useEffect(() => {
      useEffect(() => { 
              if ( 1 === scrollState ) {
                  if ( subcatsData.length-1 > scrollPage ) {
-                     if ( scrollPage < subcatsData.length -1 ) {
+                     if ( scrollPage < subcatsData.length-1 ) {
                          gsap.to(subcatTitleRefs.current[scrollPage], {
                              y: "-=300",
                              autoAlpha: 0
@@ -142,9 +141,9 @@ useEffect(() => {
                 
                 <div ref={addsubcatBGToRefs} className={`bg-subcat-bg${i%3} subcat `}>
                     <div className="subcat-wrapper-slide w-5/4 ">
-                        <SubcatImage item={item} i={i} scrollState={scrollState} scrollPage={scrollPage} subcatsData={subcatsData} imageHeight={imageHeight} imageBottom={imageBottom} imageMovement={imageMovement}/>
+                        <JournalCatsImage item={item} i={i} scrollState={scrollState} scrollPage={scrollPage} subcatsData={subcatsData} imageHeight={imageHeight} imageBottom={imageBottom} imageMovement={imageMovement}/>
                     </div>
-                    <Link href={`/category/${menu[scrollPage]?.[0]?.slug}/${item?.slug}`} >
+                    <Link href={`/journal/${item?.slug}`} >
                         <a className="cursor-pointer ">
                             <div ref={addSubcatTitleToRefs} className="subcat-title absolute w-full h-1/2 md:h-1/4 top-1/4 lg:top-1/3 flex items-center justify-center text-center text-2.5xl sm:text-5xl md:text-7xl xl:text-9xl font-serif text-white uppercase "> 
                                 {item.name}
@@ -155,7 +154,7 @@ useEffect(() => {
                     <div className="subcat-desc absolute left-1/7 md:left-1/4 bottom-12 opacity-75 text-gray-900 w-200px md:w-300px break-words text-sm md:text-base font-bold font-body">
                         <p dangerouslySetInnerHTML={ { __html: item.description, } }/>  
                     </div>
-                    <Link href={`/category/${menu[scrollPage]?.[0]?.slug}/${item?.slug}`} >
+                    <Link href={`/journal/${item?.slug}`} >
                         <a className="discover invisible md:visible absolute left-1/2 bottom-12 cursor-pointer opacity-75 text-gray-900">
                             <span className="discover-text ">click to discover</span>
                             <div className="discover-border bg-black h-px w-0"> </div>
@@ -167,7 +166,7 @@ useEffect(() => {
                     </div>
                     <p className="vertical-text-scroll absolute right-12 md:right-32 bottom-2 opacity-75 text-gray-900 text-sm md:text-base font-bold font-body"><span>Scroll</span></p>
 
-                    <SubcatImageBorder/>
+                    <JournalCatsImageBorder/>
                 </div>
             </div>            
             
@@ -176,4 +175,4 @@ useEffect(() => {
         )
     }
     
-    export default SubcatContainer;
+    export default JournalCatsContainer;

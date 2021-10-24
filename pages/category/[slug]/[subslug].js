@@ -7,22 +7,13 @@ import Header from "../../../src/components/Header";
 import { useRef, useEffect, useContext } from "react";
 import { MenuContext } from "../../../src/components/context/AppContext";
 
-export default function UnderCategorySingle( { categoryName, products, menu } ) {
+export default function UnderCategorySingle( { categoryName, products } ) {
 
     const router = useRouter()
 
     if (router.isFallback) {
         return <div>Loading...</div>
     }
-// useEffect(()=> {
-//     document.addEventListener('DOMContentLoaded', function(event) {
-//         console.log('DOMContentLoaded');
-//       });
- 
-//     return  document.removeEventListener('DOMContentLoaded', function(event) {
-//         console.log({event});
-//       });
-// });
 
 /**
  *  BLURRY BG WHEN MENU CLICKED
@@ -40,7 +31,7 @@ export default function UnderCategorySingle( { categoryName, products, menu } ) 
     return (
         <> 
             <div className="relative z-50 ">
-                <Header menu={ menu } />
+                <Header />
             </div>
             
             <div className="fixed top-0 w-reset-screen h-screen opacity-50 z-0"> 
@@ -75,13 +66,6 @@ export async function getStaticProps(context) {
         props: {
             categoryName: slug ?? '',
             products:data?.productCategory?.products?.nodes ?? [],
-            menu: 
-			[ 
-				[ data?.shop ? data.shop : [] ] ,
-				[ data?.workshop ? data.workshop : [] ] ,
-				[ data?.journal ? data.journal : [] ] ,				
-			]
-
         },
         revalidate: 10
     }

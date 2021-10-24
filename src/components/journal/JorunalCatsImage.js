@@ -1,7 +1,8 @@
 import { useRef, useEffect } from "react";
 import Image from "../../image";
 import { DEFAULT_MAINCAT_IMG_URL } from "../../constants/urls";
-const SubcatImage = ({ item, i, scrollState, scrollPage, subcatsData, imageHeight, imageBottom, imageMovement }) => {
+
+const JournalCatsImage = ({ item, i, scrollState, scrollPage, subcatsData, imageHeight, imageBottom, imageMovement }) => {
 
 /**
  *  PAGE SCROLL EFFECT FOR IMAGES CHANGE AND REFs
@@ -126,4 +127,4 @@ const SubcatImage = ({ item, i, scrollState, scrollPage, subcatsData, imageHeigh
     )
 }
 
-export default SubcatImage;
+export default JournalCatsImage;

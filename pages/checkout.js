@@ -1,5 +1,5 @@
 import CheckoutForm from "../src/components/checkout/CheckoutForm";
-import GET_COUNTRIES_AND_MENUSUBCATS from "../src/queries/get-countries-and-menusubcats";
+import GET_COUNTRIES_AND_MENUSUBCATS from "../src/queries/get-countries";
 import client from "../src/components/ApolloClient";
 import Image from 'next/image';
 import Header from "../src/components/Header";
@@ -16,7 +16,7 @@ const Checkout = ( props ) => {
         return <div>Loading...</div>
     }
 
-	const { countriesData, menu } = props || {};
+	const { countriesData } = props || {};
 
 /**
  *  BLURRY BG WHEN MENU CLICKED
@@ -39,7 +39,7 @@ const Checkout = ( props ) => {
 				<Image src='/bg.jpg' alt="background" layout="fill" />
 			</div>
 			<div className="relative z-50 ">
-				<Header menu={menu} />
+				<Header />
 			</div>	
 			<div ref={background} className="absolute z-30 left-0 right-0 checkout container mx-auto my-32 px-4 xl:px-0">
 				<h1 className="mb-5 text-2xl uppercase font-serif-ch">Checkout Page</h1>
@@ -60,12 +60,6 @@ export async function getStaticProps() {
 	return {
 		props: {
 			countriesData: data?.wooCountries || {},
-			menu: 
-			[ 
-				[ data?.shop ? data.shop : [] ] ,
-				[ data?.workshop ? data.workshop : [] ] ,
-				[ data?.journal ? data.journal : [] ] ,				
-			]
 		},
 		revalidate: 1
 	};

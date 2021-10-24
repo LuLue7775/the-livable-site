@@ -1,88 +1,76 @@
 import {gql} from "@apollo/client";
 
-export const SUBCATS_BY_SLUG = gql` query SUBCATS_BY_SLUG($slug: ID!) 
+export const SUBCATS_BY_SLUG = gql` query SUBCATS_BY_SLUG($slug: ID!, $first: Int, $after: String) 
 {
 	productCategory(id: $slug, idType: SLUG) 
 	{
+		name
+		slug
+		databaseId
 		id
-		name
-		slug
-		databaseId
-	}
-
-	shop: productCategory(id: "75", idType: DATABASE_ID) {
-		databaseId
-		name
-		slug
-		children {
-		  nodes {
-			name
-			slug
-			description
-			products(first: 4) {
-			  nodes {
-				image {
-				  sourceUrl
-				  srcSet
-				  uri
-				  altText
+		products ( first: $first, after: $after )
+		{
+			nodes 
+			{	
+				id
+				  name
 				  databaseId
-				}
-			  }
-			}
-		  }
-		}
-	  }
-    workshops: productCategory(id: "72", idType: DATABASE_ID) {
-        databaseId
-        name
-        slug
-        children {
-			nodes {
-			  name
-			  slug
-			  description
-			  products(first: 4) {
-				nodes {
+				  slug
+				  description
 				  image {
-					sourceUrl
-					srcSet
-					uri
-					altText
-					databaseId
+					  id
+					  uri
+					  title
+					  srcSet
+					  sourceUrl
 				  }
-				}
-			  }
+				  ... on SimpleProduct {
+					  salePrice
+					  regularPrice
+					  id
+				  }
+				  ... on VariableProduct {
+					  salePrice
+					  regularPrice
+					  id
+				  }
+				  ... on ExternalProduct {
+					  salePrice
+					  id
+					  regularPrice
+					  externalUrl
+				  }
+				  ... on GroupProduct {
+					  id
+					  products {
+						  nodes {
+								  ... on SimpleProduct {
+								  id
+								  regularPrice
+								  salePrice
+								  }
+							  }
+					  }
+				  }
+				  productCategories {
+					  nodes {
+						name
+						slug
+						databaseId
+						children {
+						  nodes {
+							name
+						  }
+						}
+					  }
+				  }
 			}
-		  }
-    }
-    journal: categories {
-        nodes {
-            name
-            slug
-            databaseId
-        }
-    }
+			pageInfo {
+				hasNextPage
+				endCursor
+			}
+		}
+	}
 	
 }
 `;
-
-export const CATEGORY_OR_JOURNAL_SLUGS = gql` query CATEGORY_OR_JOURNAL_SLUGS {
-	shop: productCategory(id: "75", idType: DATABASE_ID) {
-		databaseId
-		name
-		slug
-	  }
-    workshop: productCategory(id: "72", idType: DATABASE_ID) {
-        databaseId
-        name
-        slug
-    }
-    journal: categories {
-        nodes {
-            name
-            slug
-            databaseId
-        }
-    }
-}`;

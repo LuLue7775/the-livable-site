@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef } from "react";
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import client from '../../src/components/ApolloClient';
-import {PRODUCT_BY_SLUG_QUERY_AND_MENUSUBCATS, PRODUCT_SLUGS} from '../../src/queries/product-by-slug-and-menusubcats';
+import {PRODUCT_BY_SLUG_QUERY, PRODUCT_SLUGS} from '../../src/queries/product-by-slug';
 import { isEmpty } from 'lodash';
 import Header from '../../src/components/Header';
 import { MenuContext } from '../../src/components/context/AppContext';
@@ -10,7 +10,7 @@ import { MenuContext } from '../../src/components/context/AppContext';
 import MainDetail from "../../src/components/single-product/single-page/MainDetail";
 import ImageSection from "../../src/components/single-product/single-page/ImageSection";
 
-export default function Product({ product, menu }) {
+export default function Product({ product }) {
     const router = useRouter()
 
     if (router.isFallback) {
@@ -35,7 +35,7 @@ export default function Product({ product, menu }) {
 	return (
 		<>
             <div className="relative z-40 ">
-                <Header menu={ menu }/>
+                <Header/>
             </div>
 
 			{ product ? (
@@ -68,19 +68,13 @@ export async function getStaticProps(context) {
     const {params: { slug }} = context
 
     const {data} = await client.query({
-        query: PRODUCT_BY_SLUG_QUERY_AND_MENUSUBCATS,
+        query: PRODUCT_BY_SLUG_QUERY,
         variables: { slug }
     })
    
     return {
         props: {
             product: data?.product || {},
-            menu: 
-			[ 
-				[ data?.shop ? data.shop : [] ] ,
-				[ data?.workshop ? data.workshop : [] ] ,
-				[ data?.journal ? data.journal : [] ] ,				
-			]
         },
         revalidate: 1
     };

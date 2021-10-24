@@ -1,13 +1,10 @@
 import Link from "next/link";
 import CartIcon from "../cart/CartIcon";
 import { useState, useRef, useEffect, useContext, Fragment } from "react";
-import SubCategories from "./SubCategories";
 import { MenuContext } from '../context/AppContext';
 import ContactAndAccount from "./ContactAndAccount";
 
-const Fullmenu = ( props ) => {
-    const { menu } = props || {};
-    
+const Fullmenu = ( ) => {    
     const [ whichSubCatToggled, setSubCatToggled]  = useState(null);
     const [ isMenuVisible, setMenuVisibility ] = useContext( MenuContext );
 
@@ -40,13 +37,6 @@ const Fullmenu = ( props ) => {
 /**
  * SUBCATS REF
  */
-     const subcatRefs = useRef([]);
-     const addSubcatsToRefs = (el) => {
-         if ( el && !subcatRefs.current.includes(el) ) {
-             subcatRefs.current.push(el);
-         }
-     };
-
     const CatText = [ 'Shop', 'Workshops', 'Journal', 'About' ];
     const CatLinkArr = [ '/category/shop', '/category/workshops', '/journal', '/about'];
     const CatArr = []
@@ -56,20 +46,13 @@ const Fullmenu = ( props ) => {
                 <div className="overflow-hidden">
                     <li ref={addCatsToRefs} className="relative flex items-center font-serif font-bold px-2 md:px-20 md:py-4 m-2">
                         <Link href={CatLinkArr[i]}>
-                            <a onClick={ handleCatClicked } className="menu-cat inline-block text-xl sm:text-5xl xl:text-6xl text-green-1000" >
+                            <a onClick={ handleCatClicked } className="menu-cat inline-block text-xl sm:text-5xl xl:text-6xl text-green-1000 group" >
                                 {CatText[i]}
+                                <span className="menu-num-stroke sm:group-hover:text-fill-red-300 absolute text-7xl text-transparent ">0{1+i}</span>
                             </a>
                         </Link>
-                        <a onClick={ ()  => { i === whichSubCatToggled ? setSubCatToggled(null) : setSubCatToggled(i) } } 
-                            className="menu-num-btn absolute z-50 left-3/5 sm:left-1/2 xl:left-1/3 cursor-pointer block max-h-160px group">
-                            <span className="menu-num-stroke text-7xl sm:text-8xl xl:text-9xl text-transparent sm:group-hover:text-fill-red-300">0{1+i}</span>
-                        </a>
                     </li>
                 </div>
-
-                { i!==3 && <div ref={addSubcatsToRefs} className="hidden sm:block menu-subcats"> 
-                    { i === whichSubCatToggled ? <SubCategories menu={menu} whichSubCatToggled={whichSubCatToggled}/> : ''}
-                </div>}
             </Fragment>
         )
     }

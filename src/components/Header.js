@@ -4,9 +4,8 @@ import Fullmenu from './menu/Fullmenu';
 import { MenuContext } from './context/AppContext';
 import Logo from './svg-icons/Logo';
 
-const Header = ( props ) => {
+const Header = ( ) => {
 
-	const { menu } = props || {};
     const [ isMenuVisible, setMenuVisibility ] = useContext( MenuContext );
 
 	const menuClicked = () => {
@@ -54,7 +53,7 @@ const Header = ( props ) => {
 
 				{/*Menu UI shows when button clicked*/}
 				<div ref={layoutRef} className="absolute z-40">
-					{ isMenuVisible && <Fullmenu menu={ menu }/> }
+					{ isMenuVisible && <Fullmenu /> }
 				</div>
 
 			</div>

@@ -8,9 +8,8 @@ import { MobileDeviceContext } from '../src/components/context/AppContext';
 import LandingPage from '../src/components/home/Landingpage';
 
 
-export default function Home ( props ) {
+export default function Home ( ) {
 
-	const { menu } = props || {};
 	const isMobileDevice = useContext( MobileDeviceContext ) ;
 
 /**
@@ -31,7 +30,7 @@ export default function Home ( props ) {
 	return (
 		<>
 			<div className="relative z-50">
-				<Header menu={ menu }/>
+				<Header/>
 			</div>
 			<div className="fixed right-0 w-screen h-screen opacity-10 z-10"> 
             	<Image src='/noise_lg.png' alt="background" layout="fill" />
@@ -53,12 +52,6 @@ export async function getStaticProps () {
 		props: {
 			productCategories: data?.productCategories?.nodes ? data.productCategories.nodes : [],
 			products: data?.products?.nodes ? data.products.nodes : [],
-			menu: 
-			[ 
-				[ data?.shop ? data.shop : [] ] ,
-				[ data?.workshop ? data.workshop : [] ] ,
-				[ data?.journal ? data.journal : [] ] ,				
-			] ?? []
 		},
 		revalidate: 30
 	}
