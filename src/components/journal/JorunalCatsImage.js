@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect } from 'react';
 import Image from "../../image";
 import { DEFAULT_MAINCAT_IMG_URL } from "../../constants/urls";
 

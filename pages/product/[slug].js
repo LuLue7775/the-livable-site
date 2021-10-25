@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import client from '../../src/components/ApolloClient';
@@ -95,6 +95,6 @@ export async function getStaticPaths () {
 
     return {
         paths: pathsData,
-        fallback: true
+        fallback: false
     }
 }

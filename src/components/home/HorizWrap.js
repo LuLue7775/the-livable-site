@@ -1,25 +1,32 @@
 
 import useScreenSize from '../../utils/useScreenSize';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import LangingPageArrowDown from '../svg-icons/LandingpageArrowDown';
 import LandingpageTitleLine from '../svg-icons/LandingpageTitleLine';
+import { MobileDeviceContext } from '../context/AppContext';
+import { useRouter } from "next/router";
 
 export default function HorizWrap () {
+
+    const router = useRouter()
+
+    if (router.isFallback) {
+        return <div>Loading...</div>
+    }
+
 	const screenSize = useScreenSize();
-	const [isMobile, setMobile] = useState(null) ;
+    const isMobileDevice = useContext( MobileDeviceContext ) ;
+    const horizScroller = useRef();
+
     useEffect(()=>{
         if (screenSize.width < 768) {
-            setMobile(true);
+            horizScroller.current = screenSize.width*8;
         } else {
-            setMobile(false);
+            horizScroller.current = screenSize.width*4;
         }
-        // return ( ()=> setMobile(null) ) 
+        return () => router.reload();
     }, [screenSize]);
-    if (isMobile) {
-        var horizScroller = screenSize.width*8;
-    } else {
-        var horizScroller = screenSize.width*4;
-    }
+
 
     const horizPanel1Ref = useRef(null);
 	const horizWrapperRef = useRef(null);
@@ -49,7 +56,7 @@ export default function HorizWrap () {
 
 		let horizScrollTl1 = gsap.timeline();
         horizScrollTl1.to(horizWrapperRef.current, {
-            x: ()=> { return`-=${horizScroller}` },           
+            x: ()=> { return`-=${horizScroller.current}` },           
             ease: "none",
             scrollTrigger: {
                 trigger: horizWrapperRef.current,
@@ -59,32 +66,33 @@ export default function HorizWrap () {
                 immediateRender: false,
             }
         });
+        if( isMobileDevice === false ) {
+            titleRef.current.forEach((el, i)=>{
+                gsap.from( el, {
+                    opacity:0,
+                    xPercent: ()=>{ return 10*(6-i) } ,
+                    ease:"power1.inOut",
+                    scrollTrigger:{
+                        trigger: ".horiz-panel1",
+                        start: "top top",
+                        scrub:1,
+                    }
+                })
+            })
 
-		titleRef.current.forEach((el, i)=>{
-			gsap.from( el, {
-				opacity:0,
-                xPercent: ()=>{ 
-                    if(isMobile){ return 40*(6-i)}  
-                    else {return 10*(6-i)}
-                } ,
-				ease:"power1.inOut",
-				scrollTrigger:{
-					trigger: ".horiz-panel1",
-					start: "top top",
-					scrub:1,
-				}
-			})
-		})
+            let horizTl1 = gsap.timeline();
+            horizTl1.to("#line", { attr:{x2: 400}, scale:3,
+                ease: "none",
+                scrollTrigger:{
+                    trigger: horizWrapperRef.current,
+                    scrub:1,
+                }			
+            });
+            
+        }
 
-		let horizTl1 = gsap.timeline();
-		horizTl1.to("#line", { attr:{x2: 400}, scale:3,
-			ease: "none",
-			scrollTrigger:{
-				trigger: horizWrapperRef.current,
-				scrub:1,
-			}			
-		});
-		
+
+
         
     };
 
@@ -94,7 +102,7 @@ export default function HorizWrap () {
 
         HScroll();
 
-    },[]);
+    },[horizScroller.current]);
 
 
 

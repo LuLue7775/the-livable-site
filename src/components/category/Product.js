@@ -3,11 +3,13 @@ import Price from '../single-product/price';
 import Image from "../../image";
 import {DEFAULT_PRODUCT_HOME_IMG_URL} from "../../constants/urls";
 import { isEmpty } from 'lodash';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useContext } from 'react';
+import { MobileDeviceContext } from '../context/AppContext';
 
-const Product = ( props ) => {
-	const { categoryName, product } = props;
+const Product = ( { categoryName, product } ) => {
 
+	const isMobileDevice = useContext( MobileDeviceContext ) ;
+	
     const productsRefs = useRef([]);
     const addProductsToRef = (el) => {
         if ( el && !productsRefs.current.includes(el) ) {
@@ -17,21 +19,24 @@ const Product = ( props ) => {
 
 
 	useEffect(()=> {
-		gsap.registerPlugin(ScrollTrigger);
+		if ( isMobileDevice === false ) { // isMobileDevice will be null for a moment at the begining
+			gsap.registerPlugin(ScrollTrigger);
 
-		productsRefs.current.forEach( ( product ) => {
-			gsap.to( product,  {
-				opacity:1,
-				duration:0.1,
-                ease:"power2",
-				scrollTrigger: {
-					trigger: product,
-					start: "top center",
-					end:"bottom+=200 bottom",
-					scrub:1,
-				}
+			productsRefs.current.forEach( ( product ) => {
+				gsap.from( product,  {
+					opacity:0,
+					duration:0.1,
+					ease:"power2",
+					scrollTrigger: {
+						trigger: product,
+						start: "top center",
+						end:"bottom+=200 bottom",
+						scrub:1,
+					}
+				});
 			});
-		});
+		}
+
 	}, [productsRefs.current]);
 
 
@@ -69,9 +74,9 @@ const Product = ( props ) => {
 								<Price salesPrice={product?.salePrice} regularPrice={product?.regularPrice}/>
 							</div>
 
-							<div className="transition duration-150 delay-200 group-hover:text-red-500 self-end mx-4 view-item-btn text-green-1000 text-base font-minor font-semibold capitalize underline">
+							<div className="visible md:invisible transition duration-150 delay-200 group-hover:text-red-500 self-end mx-4 view-item-btn text-green-1000 text-base font-minor font-semibold capitalize underline">
 								View Item
-							</div>
+							</div> 
 						</div>
 					</a>
 					</Link>

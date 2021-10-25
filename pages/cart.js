@@ -3,13 +3,13 @@ import Image from 'next/image';
 import Header from "../src/components/Header";
 import client from '../src/components/ApolloClient';
 import SUBCATEGORIES from "../src/queries/subcategories";
-import { useRef, useContext, useEffect } from "react";
+import { useRef, useContext, useEffect } from 'react';
 import { useRouter } from "next/router";
 import { MenuContext } from "../src/components/context/AppContext";
 
 const Cart = ( ) => {
 
-	const router = useRouter()
+	const router = useRouter();
 
 
 /**

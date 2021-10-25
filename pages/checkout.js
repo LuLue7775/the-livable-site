@@ -4,14 +4,13 @@ import client from "../src/components/ApolloClient";
 import Image from 'next/image';
 import Header from "../src/components/Header";
 import { useRouter } from "next/router";
-import { useEffect, useContext, useRef } from "react";
+import { useEffect, useContext, useRef } from 'react';
 import { MenuContext } from "../src/components/context/AppContext";
 
 const Checkout = ( props ) => {
 
 	const router = useRouter()
-    // If the page is not yet generated, this will be displayed
-    // initially until getStaticProps() finishes running
+
     if (router.isFallback) {
         return <div>Loading...</div>
     }

@@ -1,16 +1,17 @@
 import Link from "next/link";
 import CartIcon from "../cart/CartIcon";
-import { useState, useRef, useEffect, useContext, Fragment } from "react";
+import { useRef, useEffect, useContext, Fragment } from 'react';
 import { MenuContext } from '../context/AppContext';
 import ContactAndAccount from "./ContactAndAccount";
+import { MobileDeviceContext } from "../context/AppContext";
 
 const Fullmenu = ( ) => {    
-    const [ whichSubCatToggled, setSubCatToggled]  = useState(null);
     const [ isMenuVisible, setMenuVisibility ] = useContext( MenuContext );
 
     const handleCatClicked = () => {
         setMenuVisibility(!isMenuVisible);   
     };
+
 
 /**
  * PAGE REVEAL EFFECT
@@ -22,16 +23,20 @@ const Fullmenu = ( ) => {
          }
      };
 
-     useEffect( () => {
-        catsRefs.current.forEach( (category, i) => {
-            gsap.from( category, {
-                y: () => `${-window.innerHeight}`,
-                duration:1,
-                ease:"power2",
-                stagger: () => `${i*0.2}`
+     const isMobileDevice = useContext( MobileDeviceContext ) ;
 
+     useEffect( () => {
+         if ( isMobileDevice === false ) {
+            catsRefs.current.forEach( (category, i) => {
+                gsap.from( category, {
+                    y: () => `${-window.innerHeight}`,
+                    duration:1,
+                    ease:"power2",
+                    stagger: () => `${i*0.2}`
+    
+                });
             });
-        });
+         }
      }, []);
 
 /**

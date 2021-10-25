@@ -29,7 +29,7 @@ const ContactAndAccount = () => {
             </Link>
         )}
         { !loading && !session && (
-            <Link href='/api/auth/signin'>
+            <Link href='/signin'>
                 <a onClick={ e => { e.preventDefault(); signIn(); } }>
                     <li className="flex items-center font-semibold font-serif py-2 text-green-1000 "> Sign In</li>
                 </a>

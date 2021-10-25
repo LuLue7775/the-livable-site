@@ -4,7 +4,7 @@ import JournalArrow from "../svg-icons/JournalArrow";
 import { DEFAULT_MAINCAT_IMG_URL } from "../../constants/urls";
 import Image from "../../image";
 import Link from "next/link";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from 'react';
 
 const JournalSingleElements = ({journalCategory, journal, isBackClicked, setBackClicked})=> {
     const titleRef = useRef(null);

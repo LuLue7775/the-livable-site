@@ -1,11 +1,10 @@
 import Link from "next/link";
-import { useEffect, useRef, useState, useContext } from "react";
+import { useEffect, useRef, useState, useContext } from 'react';
 import JournalCatsImage from "./JorunalCatsImage";
 import JournalCatsImageBorder from "./JorunalCatsImageBorder";
 import ArrowSm from "../svg-icons/ArrowSm";
 import { useSwipeable } from "react-swipeable";
 import { MenuContext } from "../context/AppContext";
-import { MobileDeviceContext } from "../context/AppContext";
 
 /** url: /journal */
 const JournalCatsContainer = ({ data, screenSize, imageHeight, imageBottom, imageMovement }) => {
@@ -14,6 +13,8 @@ const JournalCatsContainer = ({ data, screenSize, imageHeight, imageBottom, imag
 
     const [ scrollState, setScrollState ] = useState(null); 
     const [ scrollPage, setscrollPage ] = useState(0); 
+
+
 
 /*------------------------------------------------------------------*/ 
 /* useScrollDirection */    
@@ -30,9 +31,9 @@ useEffect(() => {
         window.removeEventListener("wheel", handleScroll);
     }
   }, []) 
+
 /**
  *  @TODO Solve scroll and mouse together issue. preventdefault?
- * 
  */    
 
  const handlers = useSwipeable({
@@ -138,14 +139,14 @@ useEffect(() => {
         {    
         subcatsData ? subcatsData.map( (item, i) => 
             <div key={i} ref={addsubcatContainersToRefs} className={` subcat-container${i} z-${6-i}0 subcat-containers absolute`} > 
-                
                 <div ref={addsubcatBGToRefs} className={`bg-subcat-bg${i%3} subcat `}>
+                    <JournalCatsImageBorder/>
                     <div className="subcat-wrapper-slide w-5/4 ">
                         <JournalCatsImage item={item} i={i} scrollState={scrollState} scrollPage={scrollPage} subcatsData={subcatsData} imageHeight={imageHeight} imageBottom={imageBottom} imageMovement={imageMovement}/>
                     </div>
                     <Link href={`/journal/${item?.slug}`} >
                         <a className="cursor-pointer ">
-                            <div ref={addSubcatTitleToRefs} className="subcat-title absolute w-full h-1/2 md:h-1/4 top-1/4 lg:top-1/3 flex items-center justify-center text-center text-2.5xl sm:text-5xl md:text-7xl xl:text-9xl font-serif text-white uppercase "> 
+                            <div ref={addSubcatTitleToRefs} className="subcat-title absolute w-full h-1/2 md:h-1/4 top-1/4 md:top-1/3 flex items-center justify-center text-center text-2.5xl sm:text-5xl md:text-7xl xl:text-9xl font-serif text-white uppercase transition transform delay-100 duration-500 ease-in-out hover:scale-110"> 
                                 {item.name}
                             </div>
                         </a>
@@ -155,9 +156,8 @@ useEffect(() => {
                         <p dangerouslySetInnerHTML={ { __html: item.description, } }/>  
                     </div>
                     <Link href={`/journal/${item?.slug}`} >
-                        <a className="discover invisible md:visible absolute left-1/2 bottom-12 cursor-pointer opacity-75 text-gray-900">
-                            <span className="discover-text ">click to discover</span>
-                            <div className="discover-border bg-black h-px w-0"> </div>
+                        <a className=" visible md:invisible absolute left-1/4 bottom-12 cursor-pointer opacity-75 text-gray-900 text-xl font-body">
+                             <span >(tap to discover)</span>
                         </a>
                     </Link>
                     <div className="absolute right-12 md:right-32 top-32 text-white font-serif "> Nr. {i+1}</div>
@@ -165,8 +165,6 @@ useEffect(() => {
                         <ArrowSm/>
                     </div>
                     <p className="vertical-text-scroll absolute right-12 md:right-32 bottom-2 opacity-75 text-gray-900 text-sm md:text-base font-bold font-body"><span>Scroll</span></p>
-
-                    <JournalCatsImageBorder/>
                 </div>
             </div>            
             

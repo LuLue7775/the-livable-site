@@ -4,7 +4,7 @@ import {useRouter} from "next/router";
 import ImageBG from "next/image";
 import Header from "../../src/components/Header";
 import { GET_JOURNAL_ITEMS, GET_JOURNAL_SLUGS } from "../../src/queries/get-journal-items";
-import { useEffect, useRef, useContext } from "react";
+import { useEffect, useRef, useContext } from 'react';
 
 import { MenuContext } from "../../src/components/context/AppContext";
 
@@ -109,6 +109,6 @@ export async function getStaticPaths () {
 
     return {
         paths: pathsData,
-        fallback: true
+        fallback: false
     }
 }

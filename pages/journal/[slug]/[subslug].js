@@ -3,7 +3,7 @@ import Header from "../../../src/components/Header";
 import client from "../../../src/components/ApolloClient"
 import { useRouter } from "next/router"
 import { GET_JOURNAL, GET_JOURNAL_SLUGS  } from "../../../src/queries/get-journal-items"
-import { useEffect, useRef, useState, useContext } from "react";
+import { useEffect, useRef, useState, useContext } from 'react';
 import { MenuContext } from '../../../src/components/context/AppContext';
 import JournalSingleElements from "../../../src/components/journal/JournalSingleElements";
 
@@ -120,6 +120,6 @@ export async function getStaticPaths () {
 
     return {
         paths: pathsData,
-        fallback: true
+        fallback: false
     }
 }

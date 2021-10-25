@@ -1,4 +1,4 @@
-import {useState, useContext} from "react";
+import {useState, useContext} from 'react';
 import {useQuery, useMutation} from '@apollo/client';
 import Link from "next/link";
 import {v4} from 'uuid';

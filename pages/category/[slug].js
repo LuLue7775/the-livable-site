@@ -2,17 +2,17 @@ import client from "../../src/components/ApolloClient";
 import Image from 'next/image';
 import { SUBCATS_BY_SLUG } from "../../src/queries/subcats-by-slug";
 import { useRouter } from "next/router";
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import Header from "../../src/components/Header";
 import { MenuContext } from "../../src/components/context/AppContext";
 import LoadProducts from "../../src/components/category/LoadProducts";
 
 export default function CategorySingle( { items } ) {
-    const router = useRouter()
+    const router = useRouter();
 
     if (router.isFallback) {
         return <div>Loading...</div>
-    }
+    };
 
 /**
  *  BLURRY BG WHEN MENU CLICKED
@@ -78,6 +78,6 @@ export async function getStaticPaths () {
     
     return {
         paths: pathsData,
-        fallback: true
+        fallback: false
     }
 }

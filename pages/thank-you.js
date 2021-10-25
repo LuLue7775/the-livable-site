@@ -1,4 +1,4 @@
-import {useState, useEffect, useContext} from "react";
+import {useState, useEffect, useContext} from 'react';
 import Router from "next/router";
 import Link from 'next/link';
 import axios from "axios";
@@ -19,15 +19,15 @@ const ThankYouContent = () => {
             setCart(null);
 
             if (session_id) {
-                axios.get(`/api/get-stripe-session/?session_id=${session_id}`)
-                    .then((response) => {
-                        setSessionData(response?.data ?? {});
-                        setSessionFetching(false);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        setSessionFetching(false);
-                    });
+                // axios.get(`/api/get-stripe-session/?session_id=${session_id}`)
+                //     .then((response) => {
+                //         setSessionData(response?.data ?? {});
+                //         setSessionFetching(false);
+                //     })
+                //     .catch((error) => {
+                //         console.log(error);
+                //         setSessionFetching(false);
+                //     });
             }
         }
 

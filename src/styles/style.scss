@@ -17,7 +17,6 @@ html,body {
   img {
     width: 100%;
   }
-  opacity: 0;
 }
 
 .banner {
@@ -395,30 +394,16 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .subcat-image-borders {
-//   left: 0;
-//   width: 100vw;
   position: relative; 
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  // height: calc(var(--vh, 1vh)*100)
-
 }
 
 .subcat-image-borders div {
-    // top: 0;
     height: calc(var(--vh, 1vh)*100)
 }
 
-.discover:hover {
-  .discover-border {
-    width: 200px ;
-    transform: translateX(-20%);
-    transition: all 0.2s 0.2s;
-    will-change: transform;
-  }
-
-}
 
 
 

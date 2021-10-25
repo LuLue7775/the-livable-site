@@ -1,7 +1,7 @@
 import client from "../components/ApolloClient";
 import {isEmpty, isArray} from 'lodash';
-import { createCheckoutSession } from 'next-stripe/client' // @see https://github.com/ynnoj/next-stripe
-import { loadStripe } from "@stripe/stripe-js";
+// import { createCheckoutSession } from 'next-stripe/client' // @see https://github.com/ynnoj/next-stripe
+// import { loadStripe } from "@stripe/stripe-js";
 
 import GET_STATES from "../queries/get-states";
 import {createTheOrder, getCreateOrderData} from "./order";
@@ -101,10 +101,10 @@ const createCheckoutSessionAndRedirect = async ( products, input, orderId ) => {
     }
     const session = await createCheckoutSession(sessionData)
     try {
-        const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
-        if (stripe) {
-            stripe.redirectToCheckout({ sessionId: session.id });
-        }
+        // const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+        // if (stripe) {
+        //     stripe.redirectToCheckout({ sessionId: session.id });
+        // }
     } catch (error) {
         console.log( error );
     }

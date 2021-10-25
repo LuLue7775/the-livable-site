@@ -1,5 +1,5 @@
 import Product from "./Product";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext } from 'react';
 import { SUBCATS_BY_SLUG } from "../../queries/subcats-by-slug";
 import { useLazyQuery } from "@apollo/client";
 

@@ -13,7 +13,8 @@ import CHECKOUT_MUTATION from "../../mutations/checkout";
 import Address from "./Address";
 import {
     handleBillingDifferentThanShipping,
-    handleCreateAccount, handleStripeCheckout,
+    handleCreateAccount, 
+    // handleStripeCheckout,
     setStatesForCountry
 } from "../../utils/checkout";
 import CheckboxField from "./form-elements/CheckboxField";
@@ -139,10 +140,10 @@ const CheckoutForm = ({countriesData}) => {
             return;
         }
 
-        if ( 'stripe-mode' === input.paymentMethod ) {
-            const createdOrderData = await handleStripeCheckout(input, cart?.products, setRequestError, clearCartMutation, setIsStripeOrderProcessing, setCreatedOrderData);
-        	return null;
-        }
+        // if ( 'stripe-mode' === input.paymentMethod ) {
+        //     const createdOrderData = await handleStripeCheckout(input, cart?.products, setRequestError, clearCartMutation, setIsStripeOrderProcessing, setCreatedOrderData);
+        // 	return null;
+        // }
 
         const checkOutData = createCheckoutData(input);
         setRequestError(null);

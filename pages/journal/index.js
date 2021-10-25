@@ -1,7 +1,7 @@
 import Header from "../../src/components/Header";
 import client from "../../src/components/ApolloClient";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import { GET_JOURNAL_CATS } from "../../src/queries/get-journal-items";
 import useScreenSize from "../../src/utils/useScreenSize";
 import JournalCatsContainer from "../../src/components/journal/JournalCatsContainer";

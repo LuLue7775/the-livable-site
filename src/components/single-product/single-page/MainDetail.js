@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState } from 'react';
 import Price from "../price";
 import AddToCartButton from "../../cart/AddToCartButton";
 import Detail from "./Detail";
