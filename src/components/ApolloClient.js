@@ -64,6 +64,17 @@ export const afterware = new ApolloLink( ( operation, forward ) => {
 	} );
 } );
 
+const defaultOptions = {
+	watchQuery: {
+		fetchPolicy: "no-cache",
+		errorPolicy: "ignore",
+	},
+	query: {
+		fetchPolicy: "no-cache",
+		errorPolicy: "all",
+	},
+};
+
 // Apollo GraphQL client.
 const client = new ApolloClient({
 	link: middleware.concat( afterware.concat( createHttpLink({
@@ -71,6 +82,8 @@ const client = new ApolloClient({
 		fetch: fetch
 	}) ) ),
 	cache: new InMemoryCache(),
+	defaultOptions,
+	connectToDevTools: true 
 });
 
 export default client;

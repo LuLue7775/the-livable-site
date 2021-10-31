@@ -30,7 +30,7 @@ const Layout = (props) => {
   return (
     
     <AppProvider>
-      <Provider >
+      <Provider> 
         <ApolloProvider client={client}>
           <div>
             {/* <Header /> */}

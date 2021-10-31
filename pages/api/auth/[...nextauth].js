@@ -36,18 +36,51 @@ const options = {
             session.user.id = token.id
             return session
         },
-        async redirect(url, baseUrl) {
+        async redirect(url, baseUrl) { 
+            //not really functioning. is the callbackUrl in signIn client functions redirecting successfully
             return url.startsWith(baseUrl)
               ? url
               : baseUrl
-          }
+        },
+
+        async signin(user, account, profile) {
+            // https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authenticated-user
+            const res = await fetch('https://api.github.com/user/emails', {
+                headers: {
+                'Authorization': `token ${account.accessToken}`
+                }
+            })
+            const emails = await res.json()
+            if (!emails || emails.length === 0) {
+                return
+            }
+            // Sort by primary email - the user may have several emails, but only one of them will be primary
+            const sortedEmails = emails.sort((a, b) => b.primary - a.primary)
+            profile.email = sortedEmails[0].email
+
+            if (typeof user.userId !== typeof undefined)
+            {
+                if (user.isActive === '1')
+                {
+                    return user;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        },
     },
-    // pages: {
-    //     signIn: '/signin',
+    pages: {
+        signIn: '/signin',
         // error: '/auth/error', // Error code passed in query string as ?error=
         // verifyRequest: '/auth/verify-request', // (used for check email message)
         // newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
-    //   }
+      }
 
 };
 
