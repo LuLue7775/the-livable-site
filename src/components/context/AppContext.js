@@ -11,10 +11,6 @@ export const MenuContext = React.createContext([
 
 export const MobileDeviceContext = React.createContext( false ); 
 
-export const UserContext = React.createContext([
-	{},
-	() => {}
-]); 
 
 
 export const AppProvider = ( props ) => {
@@ -60,9 +56,7 @@ export const AppProvider = ( props ) => {
 		<AppContext.Provider value={ [ cart, setCart ] }  >
 			<MenuContext.Provider value={ [ isMenuVisible, setMenuVisibility ] }>
 				<MobileDeviceContext.Provider value={ isMobileDevice }>
-					<UserContext.Provider value={[ user, setUser ]}>
 						{ props.children }
-					</UserContext.Provider>
 				</MobileDeviceContext.Provider>
 			</MenuContext.Provider>
 		</AppContext.Provider>
