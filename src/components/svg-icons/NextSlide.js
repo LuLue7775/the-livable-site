@@ -1,10 +1,14 @@
 function NextSlide() {
     return (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 200 180" fill="#fff">
-        {/* <path fillRule="nonzero" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="nonzero" /> */}
-        <path d="M200,81.61V74.38C176,15.75,0,0,0,0S59,54,0,100H181.63S195.7,95.38,200,81.61Z"/>                            
-
-    </svg>
+        <svg transform="translate(24,0)" xmlns="http://www.w3.org/2000/svg" className="h-64 w-32" viewBox="0 0 60 200">
+        <path
+          d="M60 197.8C27.2 190.5 2 149.5 2 100S27.2 9.5 60 2.2"
+          fill="none"
+          stroke="#ff823a"
+          strokeWidth={0.7}
+          strokeMiterlimit={10}
+        />
+      </svg>
     );
   }
   

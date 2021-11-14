@@ -50,21 +50,6 @@ html,body {
   }
 }
 
-// .banner-img {
-//   position: relative;
-//   height: 400px;
-// }
-
-// .slider-button {
-//   position: absolute;
-//   bottom: 0;
-//   right: 0;
-//   background: #fff;
-//   padding: 10px 20px;
-//   font-size: 24px;
-// }
-
-
 .products .product-description {
   max-width: 250px;
   white-space: nowrap;
@@ -164,17 +149,36 @@ html,body {
 }
 .border-green-1000 {
   border-color: #01272033;
-
+}
+.border-green-light {
+  border-color: #c3f33f;
 }
 
 .bg-green-1000 {
   background-color: #002c24;
 }
+.bg-orange {
+  background-color: #ebcea8;
+}
+
 .text-green-1000 {
   color: #002c24;
 }
-.border-single-product {
-  border-color: rgba(89, 141, 56, 0.5);
+.text-green-light {
+  color: #c3f33f;
+}
+
+.border-orange {
+  border-color: #ff823a80;
+}
+.text-orange {
+  color: #e7c7a8;
+}
+.text-orange-light {
+  color:#ffddbb;
+}
+.bg-orange {
+  background-color: #f1b56650 ;
 }
 
 .menu-num-stroke {
@@ -198,9 +202,10 @@ html,body {
 
 .icon-nav-right::after {
   position: absolute;
-  right: calc(100% - 10px);
+  right: calc(100% - 100px );
   top:50%;
-  width: 60px;
+  right:50%;
+  width: 20px;
   height: 1px;
   background: #fff;
   content: '';
@@ -208,13 +213,13 @@ html,body {
 }
 .icon-nav-btn:hover .icon-nav-right::after {
   width: 100px;
-  content: 'next';
-  background: #eba373e3;
+  content: '';
+  background: #ff823a;
   transition: width 0.2s 0.2s;
   transition-timing-function: linear;
 }
 .icon-nav-btn:hover .icon-click {
-  visibility: hidden;
+  color: #ff823a;
 }
 
 // logo and arrows
@@ -256,7 +261,10 @@ svg {
 
 
 .vertical-text {
-  transform: rotate(-90deg) translate(-40%, -850%);
+  transform: translate(-25px, 0);
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+  white-space: nowrap;
 }
 .vertical-slogan {
   transform: rotate(-90deg);
@@ -417,9 +425,10 @@ input[type=number]::-webkit-outer-spin-button {
   @extend .animate;
 }
 
-.custom-btn-brown {
-	background-color: #f0e7e7;
-	border: 1px solid #002c24;
+
+.custom-btn-hover {
+	// background-color: #f0e7e7;
+	border: 1px solid #c3f33f;
 	
 	&:before,
 	&:after {
@@ -430,7 +439,7 @@ input[type=number]::-webkit-outer-spin-button {
 		border-radius: 3px;
 		box-sizing: content-box;
 		@extend .animate;
-    border-color: #e0c4c4;
+    border-color: #002c24;
 	}
 	
 	&:before {
@@ -451,7 +460,7 @@ input[type=number]::-webkit-outer-spin-button {
 	}
 	
 	&:hover {
-		background-color: #ff9924cc;
+		background-color: transparent;
     color: #002c24;
 		
 		&:before {
@@ -512,27 +521,27 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .bg-subcat-bg0 {
-  background-color: #e2e4e0;
+  // background-color: #e2e4e0;
+  background-color: #d3753e;
+
 }
 .bg-subcat-bg1 {
-  background-color: #e0cfc4;
+  // background-color: #e0cfc4;
+  background-color: #5f551a;
+
 }
-.bg-subcat-bg2 {
-  background-color: #cedae2;
-}
+// .bg-subcat-bg2 {
+//   background-color: #cedae2;
+// }
 
 .curve-container{
   transform: translateY(calc(10vh));
 }
 
-// .curve-b{
-//   transform: translateX(calc(50vw));
-// }
 .curve-r{
   transform: translateX(calc(100vw));
 }
 .curve-line{
-  // transform: translateX(calc(100vw));
   width: 100vw;
 }
 
@@ -583,3 +592,59 @@ input[type=number]::-webkit-outer-spin-button {
   }
 }
 
+.text-orange-product {
+  color: #fd450d;
+}
+
+// @media screen and (min-width: 768px) {
+//   .journals-containers {
+//     height: stretch;
+//     width: 100vw;
+//     overflow: hidden;
+//     transform: translateY(100vh);
+//   }
+// }
+// @media screen and (max-width: 768px) {
+  .journals-containers {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    transform: translateY(100vh);
+  }
+// }
+
+.first-journal {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.pageWrap {
+  opacity: 0;
+}
+
+.about-container {
+  height: 300vh;
+  width: 100vw;
+}
+
+.journals-containers-mobile {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  transform: translateY(0);
+}
+
+
+@media screen and (min-width: 768px) {
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media screen and (min-width: 768px) {
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}

@@ -6,7 +6,7 @@ import {PRODUCT_BY_SLUG_QUERY, PRODUCT_SLUGS} from '../../src/queries/product-by
 import { isEmpty } from 'lodash';
 import Header from '../../src/components/Header';
 import { MenuContext } from '../../src/components/context/AppContext';
-
+import { MobileDeviceContext } from '../../src/components/context/AppContext';
 import MainDetail from "../../src/components/single-product/single-page/MainDetail";
 import ImageSection from "../../src/components/single-product/single-page/ImageSection";
 
@@ -27,38 +27,59 @@ export default function Product({ product }) {
         if (isMenuVisible) {
             background.current.className += (' blur-bg');
         } else {
-            background.current.className = "mobile-screen-100vh grid grid-cols-1 md:grid-cols-2 gap-0 md:overflow-x-hidden"
+            background.current.className = "mobile-screen-100vh relative grid grid-cols-1 md:grid-cols-2 gap-0 md:overflow-x-hidden"
         }
     }, [isMenuVisible]);
 
 
+    const isMobileDevice = useContext( MobileDeviceContext ) ;
+    const ImgSectionRef = useRef(null);
+    useEffect(()=> {
+		if( isMobileDevice ) {
+			ImgSectionRef.current.addEventListener('touchend',function(event){
+				if (event.cancelable) event.preventDefault();
+			}, false );
+            document.body.addEventListener('touchmove',function(event){
+				if (event.cancelable) event.preventDefault();
+			}, false );
+            // document.body.style.overflow = 'scroll';
+            // document.body.style.position = 'static';
+
+		}
+        return () => {
+            ImgSectionRef.current.removeEventListener('touchend',function(event){ if (event.cancelable) event.preventDefault(); }, false );
+            document.body.removeEventListener('touchmove',function(event){ if (event.cancelable) event.preventDefault();}, false );
+        }
+    }, [isMobileDevice]);
+
+
+
 	return (
-		<>
+		<div className="relative">
             <div className="relative z-40 ">
                 <Header/>
             </div>
 
 			{ product ? (
-					<div ref={background} className="single-product-form  mobile-screen-100vh grid grid-cols-1 md:grid-cols-2 gap-0 md:overflow-x-hidden">
+                <div ref={background} className=" absolute product-grid md:overflow-x-hidden">
+                    <div ref={ImgSectionRef} className=" mobile-screen-100vh overflow-hidden bg-green-1000"> 
                         <ImageSection product={product} />
+                    </div>
+                    <div className=" relative bg-orange md:overflow-x-hidden"> 
+                        {/* <Image src='/curvedBG-lg2.jpg' alt="background" layout="fill" objectFit="cover" />
+                        <div className=" overflow-hidden opacity-10"> 
+                            <Image src='/noise_lg.png' alt="background" layout="fill" objectFit="cover" />
+                        </div> */}
 
-                        <div className=" relative overflow-hidden"> 
-                            <Image src='/curvedBG-lg2.jpg' alt="background" layout="fill" objectFit="cover" />
-                            <div className=" overflow-hidden opacity-10"> 
-                                <Image src='/noise_lg.png' alt="background" layout="fill" objectFit="cover" />
-                            </div>
-                        
-                            <div className=" md:w-1/2 bg-gray-100 pt-12 pb-16 text-green-1000">
-                                <div className="single-form-container relative md:w-1/2  ">
-                                    <MainDetail product={product}/>
-                                </div>
-                            </div>
+                        <div className="relative w-screen md:w-1/2 bg-orange pt-12 pb-16 text-green-1000">
+                                <MainDetail product={product}/>
                         </div>
                     </div>
+                </div>
 			) : (
 				''
 			) }
-		</>
+		</div>
 	);
 };
 

@@ -1,7 +1,7 @@
 import Header from "../../src/components/Header";
 import client from "../../src/components/ApolloClient";
 import { useRouter } from "next/router";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { GET_JOURNAL_CATS } from "../../src/queries/get-journal-items";
 import useScreenSize from "../../src/utils/useScreenSize";
 import JournalCatsContainer from "../../src/components/journal/JournalCatsContainer";
@@ -12,6 +12,11 @@ export default function Journal( { data, slug, menu } ) {
     if (router.isFallback) {
         return <div>Loading...</div>
     }
+
+    const pageWrap = useRef(null);
+    useEffect(() => {
+        gsap.to(pageWrap.current, {opacity:1, duration:2, delay:1 });
+    }, []);
 
 /** 
  *   AFTER PAGE LOADED, CALCULATE MOVEMENT VALUE FOR GSAP TO USE, WHICH DOES'T REQUIRE PRE-RENDERED 
@@ -34,7 +39,7 @@ export default function Journal( { data, slug, menu } ) {
 
 
     return (
-        <>  
+        <div ref={pageWrap} className="pageWrap"> 
             <div className="relative z-80 ">
                 <Header/>
             </div>
@@ -42,7 +47,7 @@ export default function Journal( { data, slug, menu } ) {
             <JournalCatsContainer data={data} slug={slug} menu={menu} 
                     screenSize={screenSize} imageHeight={imageHeight} imageBottom={imageBottom} imageMovement={imageMovement} />
 
-        </>
+        </div>
 
     )
 };

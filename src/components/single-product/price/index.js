@@ -34,7 +34,7 @@ const Price = ({ regularPrice = 0, salesPrice }) => {
     
 
     return (
-        <h6 className="product-price font-serif text-base font-semibold text-green-1000 mr-3 mb-5 ">
+        <h6 className="product-price font-serif text-sm md:text-base font-semibold mr-3 mb-5 ">
             {/* Regular price */}
             <span className={productMeta?.strikeThroughClass}>{ regularPrice }</span>
             

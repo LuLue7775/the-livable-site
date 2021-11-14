@@ -27,6 +27,7 @@ const validateAndSanitizeCheckoutForm = ( data, hasStates = true ) => {
 	data.createAccount = ( ! isEmpty( data.createAccount ) ) ? data.createAccount : '';
 	data.orderNotes = ( ! isEmpty( data.orderNotes ) ) ? data.orderNotes : '';
 	// data.paymentMethod = ( ! isEmpty( data.paymentMethod ) ) ? data.paymentMethod : '';
+	data.paymentMethod = 'ecpay';
 
 	/**
 	 * Checks for error if required is true

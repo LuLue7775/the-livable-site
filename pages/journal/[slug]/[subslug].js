@@ -1,11 +1,15 @@
-import ImageBG from "next/image";
+import Image from "next/image";
 import Header from "../../../src/components/Header";
 import client from "../../../src/components/ApolloClient"
 import { useRouter } from "next/router"
 import { GET_JOURNAL, GET_JOURNAL_SLUGS  } from "../../../src/queries/get-journal-items"
 import { useEffect, useRef, useState, useContext } from 'react';
 import { MenuContext } from '../../../src/components/context/AppContext';
+import { MobileDeviceContext } from "../../../src/components/context/AppContext";
 import JournalSingleElements from "../../../src/components/journal/JournalSingleElements";
+import Link from 'next/link';
+import BackBtn from "../../../src/components/svg-icons/BackBtn";
+import JournalArrow from "../../../src/components/svg-icons/JournalArrow";
 
 export default function JournalSingle( { journalCategory, journal } ) {
     const router = useRouter();
@@ -17,6 +21,34 @@ export default function JournalSingle( { journalCategory, journal } ) {
 
     const BGRef = useRef(null);
 
+    /**
+     *  Fake smooth scroll
+     */
+     const isMobileDevice = useContext( MobileDeviceContext ) ;
+
+     const scrollRef = useRef(null);
+     useEffect(()=>{
+
+         if( isMobileDevice ===false ){
+            gsap.registerPlugin(ScrollTrigger);
+             const height = scrollRef.current.clientHeight;
+             document.body.style.height = `${height}px`;
+     
+             gsap.to( scrollRef.current , {
+                 y: -(height - document.documentElement.clientHeight),
+                 ease: 'none',
+                //  pause:true,
+                 scrollTrigger: {
+                     trigger: document.body,
+                     start: 'top top',
+                     end: 'bottom bottom',
+                     scrub: 1,
+                    //  immediateRender: false
+                 },
+             });
+         }
+     },[]);
+
     /*  When a post is clicked */
     useEffect(()=>{
         
@@ -24,7 +56,7 @@ export default function JournalSingle( { journalCategory, journal } ) {
 
         tl1.to( BGRef.current, {
             // duration:1, 
-            backgroundColor: '#d3beab', 
+            backgroundColor: '#000', 
             ease:"power2",
 
         },1)
@@ -64,8 +96,8 @@ export default function JournalSingle( { journalCategory, journal } ) {
 
     return (
         <>  
-            <div className="fixed w-reset-screen h-reset-screen opacity-50 z-0 "> 
-                <ImageBG src='/bg.jpg' alt="background" layout="fill" />
+            <div className="fixed top-0 w-reset-screen h-screen opacity-90 z-0"> 
+                <Image className="object-cover" src='/lobby.png' alt="background" layout="fill" />
             </div>
             <div className="relative z-60 ">
                 <Header/> 
@@ -74,8 +106,21 @@ export default function JournalSingle( { journalCategory, journal } ) {
             
             <div ref={BGRef} className="max-w-reset-screen h-reset-screen z-10 pb-16 overflow-hidden"> 
                 <div ref={background} className="max-w-reset-screen h-reset-screen z-10 "> 
+                    <div ref={scrollRef}>
+                        <JournalSingleElements journalCategory={journalCategory} journal={journal} isBackClicked={isBackClicked} setBackClicked={setBackClicked} />
+                    </div>
 
-                    <JournalSingleElements journalCategory={journalCategory} journal={journal} isBackClicked={isBackClicked} setBackClicked={setBackClicked} />
+                    {/* BACK BTN **/}
+                    <div className="z-50 w-64px top-16 right-0 p-4 mr-5 mt-5 xl:ml-5 xl:mb-5 fixed xl:left-0 xl:top-auto xl:bottom-12">
+                        <Link href={`/journal/${journalCategory}`}>
+                            <a onClick={ () => setBackClicked(true) } className="back-btn cursor-pointer group"> <BackBtn/> </a>
+                        </Link>
+                    </div>
+                    {/* SCROLL DOWN ARROW **/}          
+                    <div className="absolute right-0 md:right-1/4 bottom-1/7 z-40">
+                        <JournalArrow/>
+                    </div> 
+
                 </div>
             </div>                
         </>

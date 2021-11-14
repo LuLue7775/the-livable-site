@@ -8,9 +8,21 @@ import { MobileDeviceContext } from "../context/AppContext";
 const Fullmenu = ( ) => {    
     const [ isMenuVisible, setMenuVisibility ] = useContext( MenuContext );
 
+	const isMobileDevice = useContext( MobileDeviceContext ) ;
+
     const handleCatClicked = () => {
         setMenuVisibility(!isMenuVisible);   
     };
+
+    const menuRef = useRef(null);
+
+    useEffect(()=> {
+		// if( isMobileDevice === false ) {
+			menuRef.current.addEventListener('click', handleCatClicked, false );
+        // } else {
+        //     menuRef.current.addEventListener('touchend', handleCatClicked, false );
+        // }
+    },[]);
 
 
 /**
@@ -23,13 +35,11 @@ const Fullmenu = ( ) => {
          }
      };
 
-     const isMobileDevice = useContext( MobileDeviceContext ) ;
-
      useEffect( () => {
          if ( isMobileDevice === false ) {
             catsRefs.current.forEach( (category, i) => {
                 gsap.from( category, {
-                    y: () => `${-window.innerHeight}`,
+                    y: "+=100",
                     duration:1,
                     ease:"power2",
                     stagger: () => `${i*0.2}`
@@ -49,7 +59,7 @@ const Fullmenu = ( ) => {
         CatArr.push(
             <Fragment key={i} >
                 <div className="overflow-hidden">
-                    <li ref={addCatsToRefs} className="relative flex items-center font-serif font-bold px-2 md:px-20 md:py-4 m-2">
+                    <li ref={addCatsToRefs} className="relative flex items-center font-serif font-bold px-2 md:px-20 m-2">
                         <Link href={CatLinkArr[i]}>
                             <a onClick={ handleCatClicked } className="menu-cat inline-block text-xl sm:text-5xl xl:text-6xl text-green-1000 group" >
                                 {CatText[i]}
@@ -62,7 +72,7 @@ const Fullmenu = ( ) => {
         )
     }
     return (
-        <>
+        <div ref={menuRef} >
             <div className={`${isMenuVisible ? " " : 'hidden'} w-screen h-screen absolute top-0 left-0 z-0 bg-indigo-100 opacity-60`}/>
             <div className="w-screen absolute top-0 left-0 ">
                 <div className="vertical-slogan inline absolute right-1/2 top-0 w-full h-4 font-serif text-lg italic opacity-80 text-green-1000">
@@ -76,7 +86,7 @@ const Fullmenu = ( ) => {
                 </ul>
                 <CartIcon/> 
             </div>
-        </>
+        </div>
     );
 };
 

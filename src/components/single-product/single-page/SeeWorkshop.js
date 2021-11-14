@@ -6,7 +6,7 @@ const SeeWorkshop = ({product}) => {
         <div>
             <Link href={`/product/${product?.upsell?.nodes?.[0]?.slug}`}>
                 <button
-                    className="font-serif-ch custom-btn custom-btn-brown px-3 py-1 rounded-sm text-sm border-solid border border-current inline-block hover:text-green-1000 ">
+                    className="font-serif-ch custom-btn custom-btn-hover px-3 py-1 rounded-sm text-sm inline-block hover:text-green-1000 ">
                     See workshop
                 </button>
             </Link>

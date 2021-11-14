@@ -25,7 +25,10 @@ export default async function handler(req, res) {
         orderId: '',
         total: '',
         currency: '',
-        error: ''
+        error: '',
+        orderKey:'',
+        date_created:'',
+        line_items:[]
     }
 
     if ( isEmpty(req.body) ) {
@@ -42,12 +45,13 @@ export default async function handler(req, res) {
             'orders',
             req.body
         );
-
         responseData.success = true;
-        responseData.orderId = data.number;
+        responseData.orderId = data.id;
         responseData.total = data.total;
         responseData.currency = data.currency;
-
+        responseData.order_key = data.order_key;
+        responseData.date_created = data.date_created;
+        responseData.line_items = data.line_items;
         res.json(responseData)
 
     } catch (error) {

@@ -3,6 +3,9 @@ import { v4 } from "uuid";
 import { getUpdatedItems } from "../../../functions";
 import SvgCross from "../../svg-icons/Cross";
 import Link from 'next/link';
+import AddProduct from "../../svg-icons/AddProduct";
+import DeductProduct from "../../svg-icons/DeductProduct";
+
 const CartItem = ( {
 	                   item,
 	                   products,
@@ -61,7 +64,7 @@ const CartItem = ( {
 
 
 	return (
-				<div className="woo-next-cart-item" key={ item.id }>
+				<div className="woo-next-cart-item text-white font-serif-ch font-light text-base " key={ item.id }>
 					<div className="woo-next-cart-element woo-next-cart-el-close ">
 						{/* Remove item */}
 						<span className="woo-next-cart-close-icon cursor-pointer"
@@ -76,50 +79,30 @@ const CartItem = ( {
 									<img className="object-cover h-160px w-160px" src={ item.image.sourceUrl } srcSet={ item.image.srcSet } alt={ item.image.title }/>
 								</div>
 							</Link>
-								<div className="text-base font-semibold ">
+								<div className="font-semibold ">
 								{ item.name }
 								</div>
 							
 						</div>
 					
-						<div className="grid grid-rows-3 border-l p-6 max-w-150px">
+						<div className="grid grid-rows-3 border-l pr-6 pl-2 max-w-150px">
 							<div className="grid-cols-2"> 
 								<div className="border-b"> Price</div>
-								<div className="font-bold"> { ( 'string' !== typeof item.price ) ? item.price.toFixed( 2 ) : item.price } </div>
+								<div className=""> { ( 'string' !== typeof item.price ) ? item.price.toFixed( 2 ) : item.price } </div>
 							</div>
 							<div className="grid-cols-2"> 
 								<div className="border-b"> Quantity</div>
-								<div> 
-									<div className="product-add-minus-btn grid grid-cols-4 justify-items-center">
-										<button onClick={ () => { if ( BtnQty > 1 ) {setBtnQty( prevState => prevState - 1)} }} className={`${ updateCartProcessing ? 'opacity-25 pointer-events-none' : '' } col-span-1 cursor-pointer`}>
-											<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-											<path strokeLinecap="round" strokeLinecap="round" strokeWidth="1" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-											</svg>
-										</button>
-										
-										<input 
-											ref={BtnQtyRef}
-											className={`${ updateCartProcessing ? 'opacity-25 pointer-events-none' : '' } col-span-2 border rounded-lg w-12`}
-											type="number"
-											min="1"
-											data-cart-key={ item.cartKey }
-											value={BtnQty}
-											onChange={e => e.currentTarget.value }
-											// onChange={  ( event ) => handleQtyChange( event, BtnQty ,item.cartKey )   }
-										/> 
-										<button onClick={ () => setBtnQty( prevState => prevState + 1) } className={`${ updateCartProcessing ? 'opacity-25 pointer-events-none' : '' } col-span-1 cursor-pointer`}>
-											<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-											<path strokeLinecap="round" strokeLinecap="round" strokeWidth="1" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-											</svg>
-										</button>
 
-
-									</div>
+								<div className="font-serif-ch pb-4 flex justify-center">
+									<button onClick={ () => { if ( BtnQty > 1 ) {setBtnQty( prevState => prevState - 1)} }} className="px-4 cursor-pointer"> <DeductProduct mode={'light'}/> </button>
+										<div ref={BtnQtyRef} className="px-6 text-white text-center"> {BtnQty} pcs </div>
+									<button onClick={ () => { if ( BtnQty > 1 ) {setBtnQty( prevState => prevState + 1)} }} className="px-4 cursor-pointer"> <AddProduct mode={'light'}/> </button>
 								</div>
+
 							</div>
 							<div className="grid-cols-2"> 
-								<div className="border-b"> Total</div>
-								<div className="font-bold"> { ( 'string' !== typeof item.totalPrice ) ? item.totalPrice.toFixed( 2 ) : item.totalPrice } </div>
+								<div className="border-b"> Item Total</div>
+								<div className=""> { ( 'string' !== typeof item.totalPrice ) ? item.totalPrice.toFixed( 2 ) : item.totalPrice } </div>
 							</div>
 
 						</div>

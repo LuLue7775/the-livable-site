@@ -4,7 +4,7 @@ const CheckboxField = ({ handleOnChange, checked, name, label, placeholder, cont
 
     return (
         <div className={containerClassNames}>
-            <label className="leading-7 text-md text-gray-700 flex items-center cursor-pointer" htmlFor={name}>
+            <label className="leading-7 font-serif-ch text-xs text-white flex items-center cursor-pointer" htmlFor={name}>
                 <input
                     onChange={ handleOnChange }
                     placeholder={placeholder}

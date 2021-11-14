@@ -12,8 +12,11 @@ Router.events.on('routeChangeError', () => NProgress.done());
 
 import Layout from "../src/components/Layout";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, router }) {
+
+
   return (
+    
     <Layout >
       <Head>
         <title>The Livable Studio</title>
@@ -26,6 +29,8 @@ function MyApp({ Component, pageProps }) {
       </Head>
 
       <Component {...pageProps} />
+
+
     </Layout>
   )
   

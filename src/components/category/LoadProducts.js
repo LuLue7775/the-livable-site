@@ -4,7 +4,7 @@ import { SUBCATS_BY_SLUG } from "../../queries/subcats-by-slug";
 import { useLazyQuery } from "@apollo/client";
 
 import useInView from "react-cool-inview";
-
+import Image from "next/image";
 const LoadProducts = ({ items }) => {
 
     const [ productsData, setProductsData ] = useState( items?.products?.nodes ?? [] );
@@ -78,14 +78,19 @@ const LoadProducts = ({ items }) => {
 
   });
 
-
-
-
     return (
     <>
         { productsData.map( product => <Product key={ product?.id } product={ product } categoryName={items.slug} />  ) }
         { hasNextPage ? (
-            <div ref={observe} className="absolute bottom-0 w-reset-screen h-300px flex justify-center "> {inView ? "Load more" : ""} </div>
+            <div ref={observe} className="absolute bottom-0 w-reset-screen h-300px flex justify-center "> 
+                {inView 
+                ? <div className="flex flex-col items-center gap-8"> 
+                    <Image src='/spinner.gif' alt="background" width="20px" height="20px" layout="fixed" />
+                    <p>"Load more"</p> 
+
+                  </div>
+                : ""} 
+            </div>
 
             ) :
         ''

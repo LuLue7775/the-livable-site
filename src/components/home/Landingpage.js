@@ -8,7 +8,7 @@ export default function LandingPage () {
 		<>
 			<VertTop1/>
 			<HorizWrap/>
-			<VertTop2/>
+			{/* <VertTop2/> */}
 		</>
 	)
 }

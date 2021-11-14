@@ -24,7 +24,8 @@ export default function HorizWrap () {
         } else {
             horizScroller.current = screenSize.width*4;
         }
-        return () => router.reload();
+        
+        return () => { if( isMobileDevice === false ){ router.reload(); } } // only reload when resizing on desktop
     }, [screenSize]);
 
 
@@ -101,8 +102,8 @@ export default function HorizWrap () {
 		gsap.registerPlugin(ScrollTrigger);
 
         HScroll();
-
-    },[horizScroller.current]);
+    },[]);
+    // },[horizScroller.current]);
 
 
 
