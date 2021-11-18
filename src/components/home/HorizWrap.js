@@ -5,6 +5,7 @@ import LangingPageArrowDown from '../svg-icons/LandingpageArrowDown';
 import LandingpageTitleLine from '../svg-icons/LandingpageTitleLine';
 import { MobileDeviceContext } from '../context/AppContext';
 import { useRouter } from "next/router";
+import Image from 'next/image';
 
 export default function HorizWrap () {
 
@@ -39,19 +40,19 @@ export default function HorizWrap () {
     }
 
     const HScroll = () => {
-        gsap.fromTo( horizPanel1Ref.current ,{
-			backgroundColor:' #ecb886',
-		}, {
-			ease: 'none',
-			backgroundColor:'#473c08',
-			scrollTrigger: {
-				start:"top-=300 top",
-				end: () => `+=${screenSize.height}`,
-				trigger: horizPanel1Ref.current,
-				scrub: 1,
-				immediateRender: false,
-			}
-		},0);
+        // gsap.fromTo( horizPanel1Ref.current ,{
+		// 	backgroundColor:' #ecb886',
+		// }, {
+		// 	ease: 'none',
+		// 	backgroundColor:'#473c08',
+		// 	scrollTrigger: {
+		// 		start:"top-=300 top",
+		// 		end: () => `+=${screenSize.height}`,
+		// 		trigger: horizPanel1Ref.current,
+		// 		scrub: 1,
+		// 		immediateRender: false,
+		// 	}
+		// },0);
         // ScrollTrigger.refresh();
         // ScrollTrigger.config({ limitCallbacks: true });
 
@@ -108,20 +109,23 @@ export default function HorizWrap () {
 
 
     return (
-        <div ref={horizWrapperRef} className="horiz-wrapper w-900vw md:w-500vw h-screen flex overflow-x-auto overflow-y-hidden overflow-hidden">
+        <div ref={horizWrapperRef} className="horiz-wrapper w-900vw md:w-500vw h-screen flex overflow-x-hidden overflow-y-auto overflow-hidden">
+<div className="fixed top-0 w-reset-screen h-screen opacity-90 z-0"> 
+    <Image className="object-contain" src='/horiz.png' alt="background" layout="fill" />
+</div>
             <section ref={horizPanel1Ref} className="horiz-panel horiz-panel1 w-200vw md:w-screen h-screen flex items-center justify-end">
                 <div className="absolute left-0 h-screen font-minor ">
                     <LangingPageArrowDown/>
                 </div>
-                <div className="relative text-right w-screen text-green-100 font-serif text-7xl sm:text-8xl md:text-9xl">
+                <div className="relative text-right w-screen text-green-100 font-culture text-7xl sm:text-8xl md:text-9xl">
                     <div className="absolute left:1/3 md:left-1/2">
                         <LandingpageTitleLine/>
                     </div>
-                    <div ref={addToTitleRef} className="title opacity-1 pr-4 pt-8"> WE </div>   
-                    <div ref={addToTitleRef} className="title opacity-1"> ARE </div>
-                    <div ref={addToTitleRef} className="title opacity-1 pr-12"> THE </div>
-                    <div ref={addToTitleRef} className="title opacity-1"> LIVABLE </div>
-                    <div ref={addToTitleRef} className="title opacity-1 pr-4 pb-8"> STUDIO </div>
+                    <div ref={addToTitleRef} className="title opacity-1 pr-4 pt-8"> We </div>   
+                    <div ref={addToTitleRef} className="title opacity-1"> Are </div>
+                    <div ref={addToTitleRef} className="title uppercase opacity-1 pr-12"> The </div>
+                    <div ref={addToTitleRef} className="title uppercase opacity-1"> Livable </div>
+                    <div ref={addToTitleRef} className="title uppercase opacity-1 pr-4 pb-8"> Studio </div>
                     <div className="absolute left:1/3 md:left-1/2">
                         <LandingpageTitleLine/>
                     </div>
@@ -129,6 +133,7 @@ export default function HorizWrap () {
                 </div>
             </section>
             <section className="horiz-panels flex">
+
                 <section className="horiz-panel w-200vw md:w-screen h-screen grid grid-rows-8 items-center justify-items-end px-4 font-minor text-xl text-white  ">
                     <div></div>
                     <div className="w-2/3 flex justify-between"> <p>If your mind craves</p> <p>for elsewhere to go</p> </div>

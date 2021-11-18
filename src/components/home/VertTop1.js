@@ -1,5 +1,6 @@
 import useScreenSize from '../../utils/useScreenSize';
 import { useEffect, useState, useRef } from 'react';
+import Image from 'next/image';
 
 export default function VertTop1 () {
 	const screenSize = useScreenSize();
@@ -111,13 +112,16 @@ export default function VertTop1 () {
 
     return (
     <div className="vert-sects-t">
+		{/* <div className="fixed top-0 w-reset-screen h-screen opacity-90 z-0"> 
+			<Image className="object-cover" src='/vert.png' alt="background" layout="fill" />
+		</div> */}
         <section ref={vertTopRef1} className="vertTop1 relative h-screen font-body italic text-lg ">
             <div ref={addToVertTop1} className="absolute left-6 md:right-1/2 top-4 whitespace-nowrap "> In the beginning, there was nothing. </div>
             <div ref={addToVertTop1} className="absolute left-6 md:right-1/2 top-12 whitespace-nowrap"> An ore with endless possibilities inside. </div>
             <div ref={addToVertTop1} className="absolute left-6 md:right-1/2 top-20 whitespace-nowrap"> Your feeling - the eagerness.<br/>Your being - the force.<br/> </div>
             <div ref={addToVertTop1} className="absolute left-6 md:right-1/2 top-36 whitespace-nowrap"> Would you grab the tools with your hands? </div> 
         </section>
-        <section ref={vertTopRef2} className="vertTop2 grid grid-rows-2 gap-0 h-screen font-serif text-5xl md:text-8xl relative justify-items-center text-white">
+        <section ref={vertTopRef2} className="vertTop2 grid grid-rows-2 gap-0 h-screen font-culture text-5xl md:text-8xl relative justify-items-center text-white">
             <div ref={addToVertTop2Cut} className="bg-cut grid grid-rows-3 h-1/2 w-screen z-10">
                 <div></div>
                 <div ref={addToVertTop2} className="flex overflow-hidden relative justify-center text-center"> <p>T</p> <p>O</p> </div>

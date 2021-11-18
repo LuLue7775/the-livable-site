@@ -1,3 +1,15 @@
+@font-face {
+  font-family: "Culture";
+  src: url("/fonts/culture-bold-webfont.woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+.font-culture {
+  font-family: "Culture", "Times New Roman", Times, serif;
+
+}
 html,body {
   width: calc(100vw - (100vw - 100%));
   height: stretch;
@@ -566,20 +578,19 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .horiz-wrapper{   
-  background: #473c08;
+  // background: #473c08;
   -webkit-overflow-scrolling: auto;
 }
 
 .horiz-panels{
-  background: linear-gradient(0.25turn, #473c08, #e7bc93, #ddae70, );
-
+  // background: linear-gradient(0.25turn, #473c08, #e7bc93, #ddae70, );
 }
 .horiz-panel5{
-  background: #ddae70;
+  // background: #ddae70;
 }
 
 .vert-sects-b {
-  background: linear-gradient(to bottom, #ddae70, #b6b985, #9e5a12);
+  // background: linear-gradient(to bottom, #ddae70, #b6b985, #9e5a12);
 }
 
 #curveTxt{
@@ -648,3 +659,4 @@ input[type=number]::-webkit-outer-spin-button {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 }
+

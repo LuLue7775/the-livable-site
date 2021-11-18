@@ -59,7 +59,7 @@ const Fullmenu = ( ) => {
         CatArr.push(
             <Fragment key={i} >
                 <div className="overflow-hidden">
-                    <li ref={addCatsToRefs} className="relative flex items-center font-serif font-bold px-2 md:px-20 m-2">
+                    <li ref={addCatsToRefs} className="relative flex items-center font-culture font-bold px-2 md:px-20 m-2">
                         <Link href={CatLinkArr[i]}>
                             <a onClick={ handleCatClicked } className="menu-cat inline-block text-xl sm:text-5xl xl:text-6xl text-green-1000 group" >
                                 {CatText[i]}
