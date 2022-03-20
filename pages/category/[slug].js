@@ -7,6 +7,7 @@ import Header from "../../src/components/Header";
 import { MenuContext } from "../../src/components/context/AppContext";
 import { MobileDeviceContext } from "../../src/components/context/AppContext";
 import LoadProducts from "../../src/components/category/LoadProducts";
+import GridLines from "../../src/components/GridLines";
 
 export default function CategorySingle( { items } ) {
     const router = useRouter();
@@ -71,8 +72,9 @@ export default function CategorySingle( { items } ) {
             </div>
             <div className="fixed top-0 w-reset-screen h-screen opacity-90 z-0"> 
                 <Image className="object-cover" src='/lobby.png' alt="background" layout="fill" />
+                <GridLines/>
             </div>
-            <div ref={scrollRef}>
+            <div ref={scrollRef} className="">
 
                 <div className="product-categories-container container relative m-auto z-10 pt-8 w-reset-screen ">
                     <div  ref={background} className="blur-bg product-categories grid justify-items-end gap-4 grid-cols-2 xl:grid-cols-3 mt-24 " >

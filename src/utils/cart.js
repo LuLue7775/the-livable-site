@@ -27,7 +27,6 @@ export const clearTheCart = async (clearCartMutation, previousRequestError) => {
                 },
             },
         } );
-console.log('clear cart data',data)
         response.cartCleared = data?.removeItemsFromCart?.cartItems.length;
 
     } catch ( err ) {

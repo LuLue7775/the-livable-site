@@ -14,10 +14,10 @@ const ContactAndAccount = () => {
                 <SvgFacebook/>
             </a>
         </li>
-        <li className="flex items-center font-light font-serif py-2 text-green-1000 "> 
+        <li className="flex items-center font-light font-serif py-2 "> 
             info@thelivablestudio.com
         </li>
-        <li className="flex items-center font-light font-serif py-2 text-green-1000 "> 
+        <li className="flex items-center font-light font-serif py-2"> 
             <Link href="/policy">
                 Policy
             </Link>

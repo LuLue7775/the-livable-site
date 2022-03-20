@@ -7,22 +7,17 @@ import PaymentModes from "./PaymentModes";
 import {AppContext} from "../context/AppContext";
 import validateAndSanitizeCheckoutForm from '../../validator/checkout';
 import {getFormattedCart, createCheckoutData,} from "../../functions";
-import OrderSuccess from "./OrderSuccess";
 import GET_CART from "../../queries/get-cart";
-import CHECKOUT_MUTATION from "../../mutations/checkout";
 import Address from "./Address";
 import {
-    handleBillingDifferentThanShipping,
-    handleCreateAccount, 
+    handleBillingDifferentThanShipping, handleCreateAccount, 
     // handleStripeCheckout,
-    handleECpayCheckout,
-    setStatesForCountry
+    handleECpayCheckout, setStatesForCountry
 } from "../../utils/checkout";
 import CheckboxField from "./form-elements/CheckboxField";
 import CLEAR_CART_MUTATION from "../../mutations/clear-cart";
 import { useRouter } from 'next/router';
 import axios from 'axios';
-
 
 // Use this for testing purposes, so you dont have to fill the checkout form over an over again.
 const defaultCustomerInfo = {
@@ -84,25 +79,8 @@ const CheckoutForm = ({countriesData}) => {
         }
     });
 
-    // Create New order: Checkout Mutation.
-    const [checkout, {
-        data: checkoutResponse,
-        loading: checkoutLoading,
-    }] = useMutation(CHECKOUT_MUTATION, {
-        variables: {
-            input: orderData
-        },
-        onCompleted:(data) => {
-            console.log('checkout mutation: ',data);
-        },
-        onError: (error) => {
-            if (error) {
-                setRequestError(error?.graphQLErrors?.[0]?.message ?? '');
-            }
-        }
-    });
-
     const [ clearCartMutation ] = useMutation( CLEAR_CART_MUTATION );
+
 
     /*
      * Handle form submit.
@@ -131,21 +109,8 @@ const CheckoutForm = ({countriesData}) => {
                 billing: {...input.billing, errors: billingValidationResult.errors},
                 shipping: {...input.shipping, errors: shippingValidationResult.errors},
             });
-
             return;
         }
-
-        /**
-         * graphql checkout mutation was needed when stripe or ecpay mode not applied. ?
-         */
-        // create data that fits checkout mutation format
-        const checkOutData = createCheckoutData(input); 
-        setRequestError(null);
-        /**
-         *  When order data is set, checkout mutation will automatically be called,
-         *  because 'orderData' is added in useEffect as a dependency.
-         */
-        setOrderData(checkOutData); // setting checkout mutation graphql
 
         /**
          *  Process Ecpay. 
@@ -157,17 +122,19 @@ const CheckoutForm = ({countriesData}) => {
          *  THAT'S THE REASON NOT GEN ECPAYTradeNo at this point. should be right before directed to /ecpay page                      
          */
         const ecpayCheckoutData = await handleECpayCheckout(input, cart?.products, setRequestError, clearCartMutation, setIsECPayOrderProcessing, setCreatedOrderData);
-    
+// console.log('ecpayCheckoutData: ', ecpayCheckoutData);
+
         axios( {
             data: { ecpayCheckoutData },
             method:'post',
             url:'/api/create-ecpay-session'
         }).catch ( (err)=> {
-            console.log(err)
+            console.log('create-ecpay-session err',err)
         });
 
         router.push('/ecpay');
     };
+
 
     /*
      * Handle onchange input.
@@ -210,16 +177,9 @@ const CheckoutForm = ({countriesData}) => {
         await setStatesForCountry(target, setTheBillingStates, setIsFetchingBillingStates);
     }
 
-    useEffect(async () => {
-
-        if (null !== orderData) {
-            // Call the checkout mutation when the value for orderData changes/updates.
-            await checkout();
-        }
-    }, [orderData]);
 
     // Loading state
-    const isOrderProcessing = checkoutLoading || isECPayOrderProcessing;
+    const isOrderProcessing = isECPayOrderProcessing;
 
     return (
         <>

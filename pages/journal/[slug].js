@@ -5,7 +5,6 @@ import Image from "next/image";
 import Header from "../../src/components/Header";
 import { GET_JOURNAL_ITEMS, GET_JOURNAL_SLUGS } from "../../src/queries/get-journal-items";
 import { useEffect, useRef, useContext, useState } from 'react';
-import { MenuContext } from "../../src/components/context/AppContext";
 import JournalSubcat from "../../src/components/journal";
 import { useSwipeable } from "react-swipeable";
 import TextRoundPath from "../../src/components/svg-icons/TextRoundPath";
@@ -29,22 +28,6 @@ export default function JournalSubcats( { journalCategory, journalCategorySlug, 
     useEffect(() => {
         gsap.to(pageWrap.current, {opacity:1, duration:2, delay:1 })  // opening fade
     }, []);
-
-/**
- *  BLURRY BG WHEN MENU CLICKED
- */    
-    const background = useRef(null);
-
-    const [ isMenuVisible, setMenuVisibility ] = useContext( MenuContext );
-
-    useEffect(()=> {
-        if (isMenuVisible) {
-            background.current.className += (' blur-bg');
-        } else {
-            background.current.className = "max-w-reset-screen h-reset-screen z-10 pb-10"
-        }
-    }, [isMenuVisible]);    
-
 
     /*------------------------------------------------------------------*/ 
     /* useScrollDirection */    
@@ -125,7 +108,7 @@ export default function JournalSubcats( { journalCategory, journalCategorySlug, 
                 <Header/>
             </div>
             
-            <div  ref={background} className="fixed max-w-reset-screen h-reset-screen z-10 pb-10 overflow-hidden"> 
+            <div className="max-w-reset-screen h-reset-screen z-10 pb-10"> 
                 { isMobileDevice===false 
                 ?                 
                     <div className="absolute w-reset-screen h-reset-screen overflow-hidden">

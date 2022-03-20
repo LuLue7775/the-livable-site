@@ -6,7 +6,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true'
   })
 
+
 module.exports = withBundleAnalyzer({
+    crossOrigin: 'anonymous',
     reactStrictMode: true,
 
     /**
@@ -42,9 +44,10 @@ module.exports = withBundleAnalyzer({
             // by next.js will be dropped. Doesn't make much sense, but how it is
           fs: false, // the solution
         };
-    
+        // config.infrastructureLogging = { debug: /PackFileCache/ };    
         return config;
       },
+
     webpackDevMiddleware: (config) => {
         config.watchOptions = {
             poll: 1000,

@@ -5,23 +5,27 @@ import { MenuContext } from '../context/AppContext';
 import ContactAndAccount from "./ContactAndAccount";
 import { MobileDeviceContext } from "../context/AppContext";
 
-const Fullmenu = ( ) => {    
+const Fullmenu = ({ layoutRef }) => {    
     const [ isMenuVisible, setMenuVisibility ] = useContext( MenuContext );
 
 	const isMobileDevice = useContext( MobileDeviceContext ) ;
 
     const handleCatClicked = () => {
-        setMenuVisibility(!isMenuVisible);   
+        gsap.to( layoutRef.current, { 
+            autoAlpha:0, ease:"power4", duration:0.8, 
+            onComplete: () => setMenuVisibility(false)
+        } ) 
     };
 
     const menuRef = useRef(null);
 
     useEffect(()=> {
 		// if( isMobileDevice === false ) {
-			menuRef.current.addEventListener('click', handleCatClicked, false );
+			menuRef.current.addEventListener('click', handleCatClicked );
         // } else {
-        //     menuRef.current.addEventListener('touchend', handleCatClicked, false );
+        //     menuRef.current.addEventListener('touchend', handleCatClicked );
         // }
+
     },[]);
 
 
@@ -36,7 +40,7 @@ const Fullmenu = ( ) => {
      };
 
      useEffect( () => {
-         if ( isMobileDevice === false ) {
+         if ( isMobileDevice === false && isMenuVisible ) {
             catsRefs.current.forEach( (category, i) => {
                 gsap.from( category, {
                     y: "+=100",
@@ -47,7 +51,7 @@ const Fullmenu = ( ) => {
                 });
             });
          }
-     }, []);
+     }, [isMenuVisible]);
 
 /**
  * SUBCATS REF
@@ -71,17 +75,18 @@ const Fullmenu = ( ) => {
             </Fragment>
         )
     }
-    return (
+    return ( 
+        
         <div ref={menuRef} >
             <div className={`${isMenuVisible ? " " : 'hidden'} w-screen h-screen absolute top-0 left-0 z-0 bg-indigo-100 opacity-60`}/>
-            <div className="w-screen absolute top-0 left-0 ">
+            <div className={`${isMenuVisible ? " " : 'hidden'} w-screen absolute top-0 left-0`}>
                 <div className="vertical-slogan inline absolute right-1/2 top-0 w-full h-4 font-serif text-lg italic opacity-80 text-green-1000">
                     A place your spiritual mind resides.
                 </div>
                 <ul className=" flex flex-col pl-8 pt-20 sm:pt-32 pb-2 md:py-32 md:mt-10 md:mr-16 justify-center ">
                     {CatArr}
                 </ul>
-                <ul className="contact text-sm sm:pt-12 md:absolute md:right-0 md:top-4 px-20 xl:pl-5 md:pr-20">
+                <ul className="contact text-sm sm:pt-12 md:absolute md:right-0 md:top-4 px-20 xl:pl-5 md:pr-20 text-green-1000 ">
                     <ContactAndAccount/>
                 </ul>
                 <CartIcon/> 

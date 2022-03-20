@@ -154,7 +154,7 @@ export const getCreateStripeOrderData = (order, products) => {
  *
  * @returns {Promise<{orderId: null, error: string}>}
  */
-export const createTheOrder = async ( orderData, setOrderFailedError, previousRequestError ) => {
+export const createTheOrder = async ( orderData ) => {
     let response = {
         orderId: '',
         total: '',
@@ -165,13 +165,6 @@ export const createTheOrder = async ( orderData, setOrderFailedError, previousRe
         line_items:[]
     };
 
-    // Don't proceed if previous request has error.
-    if ( previousRequestError ) {
-        response.error = previousRequestError;
-        return response;
-    }
-
-    setOrderFailedError( '' );
 
     try {
         const request = await fetch( '/api/create-order', {
@@ -185,7 +178,6 @@ export const createTheOrder = async ( orderData, setOrderFailedError, previousRe
         const result = await request.json();
         if ( result.error ) {
             response.error = result.error
-            setOrderFailedError( 'Something went wrong. Order creation failed. Please try again' );
         }
 
         response.orderId = result?.orderId.toString() ?? '';

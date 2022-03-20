@@ -47,8 +47,10 @@ export default function Product({ product }) {
 
 		}
         return () => {
-            ImgSectionRef.current.removeEventListener('touchend',function(event){ if (event.cancelable) event.preventDefault(); }, false );
-            document.body.removeEventListener('touchmove',function(event){ if (event.cancelable) event.preventDefault();}, false );
+            if( isMobileDevice ) {
+                ImgSectionRef.current.removeEventListener('touchend',function(event){ if (event.cancelable) event.preventDefault(); }, false );
+                document.body.removeEventListener('touchmove',function(event){ if (event.cancelable) event.preventDefault();}, false );
+            }
         }
     }, [isMobileDevice]);
 
@@ -66,12 +68,7 @@ export default function Product({ product }) {
                         <ImageSection product={product} />
                     </div>
                     <div className=" relative bg-orange md:overflow-x-hidden"> 
-                        {/* <Image src='/curvedBG-lg2.jpg' alt="background" layout="fill" objectFit="cover" />
-                        <div className=" overflow-hidden opacity-10"> 
-                            <Image src='/noise_lg.png' alt="background" layout="fill" objectFit="cover" />
-                        </div> */}
-
-                        <div className="relative w-screen md:w-1/2 bg-orange pt-12 pb-16 text-green-1000">
+                        <div className="relative w-full md:w-1/2 bg-orange pt-12 pb-16 text-green-1000">
                                 <MainDetail product={product}/>
                         </div>
                     </div>

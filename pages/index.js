@@ -7,7 +7,6 @@ import { MobileDeviceContext } from '../src/components/context/AppContext';
 
 import LandingPage from '../src/components/home/Landingpage';
 
-
 export default function Home ( ) {
   
 	const pageWrap = useRef(null);
@@ -30,17 +29,15 @@ export default function Home ( ) {
 		}
     }, [isMobileDevice]);
 
-
+	
 	
 	return (
 		<div ref={pageWrap} className="pageWrap">
 			<div className="relative z-50">
 				<Header/>
 			</div>
-			<div className="fixed right-0 w-screen h-screen opacity-10 z-10"> 
-				<Image src='/noise_lg.png' alt="background" layout="fill" />
-			</div>
-			<div ref={LandingRef} className="front-wrapper overflow-hidden">
+
+			<div ref={LandingRef} className="front-wrapper overflow-hidden"> 
 				<LandingPage/>  
 			</div>
 		</div>

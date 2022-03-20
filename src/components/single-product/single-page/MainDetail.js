@@ -77,6 +77,10 @@ const MainDetail = ({product}) => {
             </button>                           
             { showDetail &&  <Detail product={product} /> }
 
+            <div className='h-300px'>
+
+            </div>
+
         </div>
     )
 }

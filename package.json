@@ -5,11 +5,11 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start",
+    "start": "next start ",
     "analyze": "cross-env ANALYZE=true next build",
     "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
     "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build",
-    "ngrok": "ngrok http 3000"
+    "ngrok": "ngrok http 3001"
   },
   "dependencies": {
     "@apollo/client": "^3.3.16",
@@ -17,11 +17,12 @@
     "@stripe/stripe-js": "^1.14.0",
     "@svgr/cli": "^5.5.0",
     "@woocommerce/woocommerce-rest-api": "^1.0.1",
+    "autoprefixer": "^10.4.0",
     "axios": "^0.23.0",
     "classnames": "^2.3.1",
     "cookie": "^0.4.1",
+    "cors": "^2.8.5",
     "cross-env": "^7.0.3",
-    "crypto": "^1.0.1",
     "ecpay-aio-node": "0.0.5-beta3",
     "graphql": "^15.4.0",
     "html-react-parser": "^1.4.0",

@@ -1,12 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import ecpay from 'ecpay-aio-node';
 import parse from 'html-react-parser';
 import cookie from 'cookie';
+import { useRouter } from "next/dist/client/router";
 
 const  ECpay = ( {ecpay_html} ) => {
 
-    return( ecpay_html ? parse(ecpay_html) : <> wait a moment </> );
-    // return( <> ECPAY TEST.</>)
+    const router = useRouter();
+
+    useEffect(()=>{
+      if( ecpay_html ) {
+        router.reload(window.location.pathname)
+      }
+    },[ecpay_html]);
+
+    return( ecpay_html ? parse(ecpay_html) : <> wait a moment pls </> );
 };
 
 
@@ -33,7 +41,7 @@ export const randomValue = function (min, max) {
 }
 
 export function getUid(orderKey) {
-  let ecpayUid= randomValue(10, 99) + orderKey.replace(/wc_order_/g,'') ;
+  let ecpayUid= 'WC' + orderKey.replace(/wc_order_/g,'') ;
   return ecpayUid
 }
 
@@ -59,10 +67,12 @@ export function formatItemname(lineItems) {
 
 export async function getServerSideProps(context) {
 
+  var ecpay_html = '';
+
   let paymentSession = getPaymentSessionToken( context.req ).ecpaySession  ;
   paymentSession = JSON.parse(paymentSession);
 
-  // if ( paymentSession ) {
+  if ( paymentSession ) {
       const ecpay_api = new ecpay({
         operationMode: "Test",
         isProjectContractor: "N",
@@ -74,23 +84,21 @@ export async function getServerSideProps(context) {
         }
       });  
 
-      const genUid = getUid(paymentSession.orderKey)
-      const orderId = paymentSession.orderId.toString();
-
       let base_param = {
-          MerchantTradeNo: genUid, //請帶20碼uid, 
+          MerchantTradeNo: getUid(paymentSession.orderKey), //請帶20碼uid, 
           MerchantTradeDate: formatDate(paymentSession.date_created), 
-          TotalAmount: paymentSession.total.toString(),      // 總金額來源需要再調整 必須來自私有API  =====================
-          CustomField1: orderId,
+          TotalAmount: paymentSession.total,      
+          CustomField1: paymentSession.orderId,
           ItemName: formatItemname(paymentSession.line_items),
-          // ReturnURL: 'https://eb01-27-53-161-41.ngrok.io/api/ecpay-payment-result',
-          ReturnURL: 'https://the-livable-site.vercel.app/api/ecpay-payment-result',
+          // TradeDesc:'交易描述',
+          // ReturnURL: 'https://the-livable-studio-multistage-6wimr3bvhq-de.a.run.app/api/ecpay-payment-result',
+          ReturnURL: 'https://the-livable-site.vercel.app/api/ecpay-payment-result/',
           EncryptType:'1',
-          // OrderResultURL: 'https://eb01-27-53-161-41.ngrok.io/payment-result',
-          OrderResultURL: 'https://the-livable-site.vercel.app/payment-result',
-          ClientBackURL: `https://the-livable-site.vercel.app/thank-you`,
+          // OrderResultURL: 'https://the-livable-studio-multistage-6wimr3bvhq-de.a.run.app/payment-result',
+          OrderResultURL: 'https://the-livable-site.vercel.app/payment-result/',
+          // ClientBackURL: `https://the-livable-site.vercel.app/thank-you`,
           NeedExtraPaidInfo:'Y',
-          IgnorePayment:'CVS#BARCODE'
+          IgnorePayment:'CVS',
           // ItemURL: 'http://item.test.tw',
           // Remark: '交易備註',
           // HoldTradeAMT: '1',
@@ -99,10 +107,10 @@ export async function getServerSideProps(context) {
       // 電子發票
       let inv_params = {};
 
-      console.log( base_param )
-
-      const ecpay_html = await ecpay_api.payment_client.aio_check_out_all(base_param, {}) 
-  // }
+      ecpay_html = await ecpay_api.payment_client.aio_check_out_all(base_param, {}) 
+  } else {
+    ecpay_html = '<div> ORDER NOT CREATED</div>'
+  }
   return {
     props: {
       ecpay_html: ecpay_html,

@@ -139,7 +139,7 @@ const CartItemsContainer = () => {
 
 
 						{/*Cart Total*/ }
-						<div className="row woo-next-cart-total-container border border-green-light rounded-sm p-5 text-right">
+						<div className="row cart-total-container border border-green-light rounded-sm p-5 text-right">
 								<table className="table table-hover mb-5">
 									<tbody>
 									<tr className="table-light flex flex-col text-white">
@@ -161,7 +161,7 @@ const CartItemsContainer = () => {
 					</div>
 
 					{/* Display Errors if any */}
-					{ requestError ? <div className="row woo-next-cart-total-container mt-5"> { requestError } </div> : '' }
+					{ requestError ? <div className="row cart-total-container mt-5"> { requestError } </div> : '' }
 				</div>
 			) : (
 				<div className="container mx-auto my-32 px-4 xl:px-0">

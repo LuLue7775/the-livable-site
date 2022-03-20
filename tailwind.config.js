@@ -57,7 +57,8 @@ module.exports = {
         '1/2': '50vh',
         'reset-screen': 'calc(100vh - (100vh - 100%))',
         '3/5': '60vh',
-        '4/5':'80vh'
+        '4/5':'80vh',
+        '300vh':'300vh',
       },
       width: {
         '64px': '64px',

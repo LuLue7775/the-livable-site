@@ -7,8 +7,6 @@ import GET_STATES from "../queries/get-states";
 import { createTheOrder, getCreateECpayOrderData, getCreateStripeOrderData} from "./order";
 import {clearTheCart} from "./cart";
 
-import parse from 'html-react-parser';
-
 
 /**
  * Get states
@@ -177,12 +175,13 @@ export const getMetaData = ( input, orderId ) => {
     // formatting orderData to fit wc-rest-api /orders requirement
     const orderData = getCreateECpayOrderData( input, products ); 
     // wc rest api /orders
-    const createECpayCustomerOrder = await createTheOrder( orderData, setRequestError,  '' ); 
+    const createECpayCustomerOrder = await createTheOrder( orderData ); 
     const cartCleared = await clearTheCart( clearCartMutation, createECpayCustomerOrder?.error );
     setIsECPayOrderProcessing(false);
 
 
     if ( isEmpty( createECpayCustomerOrder?.orderId ) || cartCleared?.error ) {
+    // if (  cartCleared?.error ) {
         console.log('createECpayCustomerOrder Error');
         setRequestError('Clear cart failed')
     	return null;

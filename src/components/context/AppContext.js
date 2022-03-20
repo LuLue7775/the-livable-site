@@ -11,6 +11,11 @@ export const MenuContext = React.createContext([
 
 export const MobileDeviceContext = React.createContext( false ); 
 
+export const HomeOpeningContext = React.createContext( [ 
+	false, 
+	()=>{} 
+] ); 
+
 
 
 export const AppProvider = ( props ) => {
@@ -22,6 +27,9 @@ export const AppProvider = ( props ) => {
 	const [ isMenuVisible, setMenuVisibility ] = useState(false);
 
 	const [ isMobileDevice, setMobileDevice ] = useState(null) ;
+
+	const [ isHomeLoaded, setHomeLoaded ] = useState(false) ;
+
 
 	const isMounted = useRef(false); 
 	useEffect(() => {
@@ -56,7 +64,9 @@ export const AppProvider = ( props ) => {
 		<AppContext.Provider value={ [ cart, setCart ] }  >
 			<MenuContext.Provider value={ [ isMenuVisible, setMenuVisibility ] }>
 				<MobileDeviceContext.Provider value={ isMobileDevice }>
-						{ props.children }
+					<HomeOpeningContext.Provider value={ [ isHomeLoaded, setHomeLoaded ] }>
+							{ props.children }
+					</HomeOpeningContext.Provider>
 				</MobileDeviceContext.Provider>
 			</MenuContext.Provider>
 		</AppContext.Provider>
