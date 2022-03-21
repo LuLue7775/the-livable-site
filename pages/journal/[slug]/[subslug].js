@@ -112,7 +112,7 @@ export default function JournalSingle( { journalCategory, journal } ) {
 
                     {/* BACK BTN **/}
                     <div className="z-50 w-64px top-16 right-0 p-4 mr-5 mt-5 xl:ml-5 xl:mb-5 fixed xl:left-0 xl:top-auto xl:bottom-12">
-                        <Link href={`/journal/${journalCategory}`}>
+                        <Link href={`/journal`}>
                             <a onClick={ () => setBackClicked(true) } className="back-btn cursor-pointer group"> <BackBtn/> </a>
                         </Link>
                     </div>

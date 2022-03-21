@@ -1,72 +1,4 @@
-@font-face {
-  font-family: "Culture";
-  src: url("/fonts/culture-bold-webfont.woff2");
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
 
-@font-face {
-  font-family: "CaslonGraComD";
-  src: url("/fonts/CaslonGraComD.woff2");
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Graphik";
-  src: url("/fonts/graphik-light.woff2");
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "MaelstromSans";
-  src: url("/fonts/maelstrom-sans-bold.woff2");
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
-.font-culture {
-  font-family: "Culture", "Times New Roman", Times, serif;
-
-}
-.font-caslon {
-  font-family: "CaslonGraComD", Times, serif;
-}
-.font-graphik {
-  font-family: "Graphik", Times, serif;
-}
-.font-maelstromSans {
-  font-family: "MaelstromSans", Times, serif;
-}
-.text-red-1000 {
-  color: #ed5122;
-}
-
-//****** noise ********
-.noisy-homeH {
-  height: 100%;
-  background: linear-gradient(1deg, rgba(220,67,53,0.9), rgba(152,70,70,0.64)), url(https://grainy-gradients.vercel.app/noise.svg);   
-  filter: contrast(200%) brightness(600%);
-} 
-.noisy-homeV {
-  height: 100%;
-  background: linear-gradient(183deg, rgba(220,67,53,0.9), rgba(152,70,70,0.64)), url(https://grainy-gradients.vercel.app/noise.svg);   
-  filter: contrast(200%) brightness(600%);
-} 
-
-/* Chrome-specific */
-@media all and (-webkit-min-device-pixel-ratio:0) and (min-resolution: .001dpcm) {
-  .noisy {
-    filter: contrast(200%) brightness(600%);
-  }
-}
-
-// **********************
 
 html,body {
   width: calc(100vw - (100vw - 100%));
@@ -696,9 +628,7 @@ input[type=number]::-webkit-outer-spin-button {
   overflow: hidden;
 }
 
-.pageWrap {
-  opacity: 0;
-}
+
 
 .about-container {
   height: 300vh;
@@ -861,3 +791,74 @@ input[type=number]::-webkit-outer-spin-button {
   left: 50%;
   transform: translateX(-50%) scaleZ(2);
 }
+
+
+@font-face {
+  font-family: "Culture";
+  src: url("/fonts/culture-bold-webfont.woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CaslonGraComD";
+  src: url("/fonts/CaslonGraComD.woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Graphik";
+  src: url("/fonts/graphik-light.woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "MaelstromSans";
+  src: url("/fonts/maelstrom-sans-bold.woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+.font-culture {
+  font-family: "Culture", "Times New Roman", Times, serif;
+
+}
+.font-caslon {
+  font-family: "CaslonGraComD", Times, serif;
+}
+.font-graphik {
+  font-family: "Graphik", Times, serif;
+}
+.font-maelstromSans {
+  font-family: "MaelstromSans", Times, serif;
+}
+.text-red-1000 {
+  color: #ed5122;
+}
+
+//****** noise ********
+.noisy-homeH {
+  height: 100%;
+  background: linear-gradient(1deg, rgba(220,67,53,0.9), rgba(152,70,70,0.64)), url(https://grainy-gradients.vercel.app/noise.svg);   
+  filter: contrast(200%) brightness(600%);
+} 
+.noisy-homeV {
+  height: 100%;
+  background: linear-gradient(183deg, rgba(220,67,53,0.9), rgba(152,70,70,0.64)), url(https://grainy-gradients.vercel.app/noise.svg);   
+  filter: contrast(200%) brightness(600%);
+} 
+
+/* Chrome-specific */
+@media all and (-webkit-min-device-pixel-ratio:0) and (min-resolution: .001dpcm) {
+  .noisy {
+    filter: contrast(200%) brightness(600%);
+  }
+}
+
+// **********************

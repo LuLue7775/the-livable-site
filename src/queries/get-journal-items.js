@@ -136,6 +136,11 @@ query GET_ALL_JOURNALS {
           altText
         }
       }
+      categories {
+        nodes {
+          name
+        }
+      }
     }
   }
 }

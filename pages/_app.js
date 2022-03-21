@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps, router,  }) {
   return (
     
     <Layout >
-      <Head>
+      <Head crossOrigin="anonymous">
         <title>The Livable Studio</title>
         <link rel="shortcut icon" href="/favicon.ico" crossOrigin="anonymous"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js" crossOrigin="anonymous"></script>
@@ -25,7 +25,8 @@ function MyApp({ Component, pageProps, router,  }) {
             rel="preload"
             href="/fonts/culture-bold-webfont.woff2"
             as="font"
-            crossOrigin="anonymous"
+            crossOrigin=""
+            
           />
 
       </Head>
