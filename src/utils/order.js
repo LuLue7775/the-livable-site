@@ -39,7 +39,6 @@ export const getCreateOrderLineItems = (products) => {
         return []
     }
 
-    console.log( 'products', products );
 
     return products?.map(
         ({productId, qty: quantity}) => {
@@ -53,13 +52,13 @@ export const getCreateOrderLineItems = (products) => {
 }
 
 /**
- * Get Formatted create order data.
+ * Get Formatted create order data for Stripe.
  *
  * @param order
  * @param products
  * @return {{shipping: {country: *, city: *, phone: *, address_1: (string|*), address_2: (string|*), postcode: (string|*), last_name: (string|*), company: *, state: *, first_name: (string|*), email: *}, payment_method_title: string, line_items: (*[]|*), payment_method: string, billing: {country: *, city: *, phone: *, address_1: (string|*), address_2: (string|*), postcode: (string|*), last_name: (string|*), company: *, state: *, first_name: (string|*), email: *}}}
  */
-export const getCreateOrderData = (order, products) => {
+export const getCreateStripeOrderData = (order, products) => {
     // Set the billing Data to shipping, if applicable.
     const billingData = order.billingDifferentThanShipping ? order.billing : order.shipping;
 
@@ -98,6 +97,55 @@ export const getCreateOrderData = (order, products) => {
 }
 
 /**
+ * Get Formatted create order data for ECpay.
+ *
+ * @param order
+ * @param products
+ * @return {{shipping: {country: *, city: *, phone: *, address_1: (string|*), address_2: (string|*), postcode: (string|*), last_name: (string|*), company: *, state: *, first_name: (string|*), email: *}, payment_method_title: string, line_items: (*[]|*), payment_method: string, billing: {country: *, city: *, phone: *, address_1: (string|*), address_2: (string|*), postcode: (string|*), last_name: (string|*), company: *, state: *, first_name: (string|*), email: *}}}
+ */
+
+ export const getCreateECpayOrderData = (order, products) => {
+    // Set the billing Data to shipping, if applicable.
+    const billingData = order.billingDifferentThanShipping ? order.billing : order.shipping;
+
+    // Checkout data.
+    return {
+        shipping: {
+            first_name: order?.shipping?.firstName,
+            last_name: order?.shipping?.lastName,
+            address_1: order?.shipping?.address1,
+            address_2: order?.shipping?.address2,
+            city: order?.shipping?.city,
+            country: order?.shipping?.country,
+            state: order?.shipping?.state,
+            postcode: order?.shipping?.postcode,
+            email: order?.shipping?.email,
+            phone: order?.shipping?.phone,
+            company: order?.shipping?.company,
+            payment_method: 'ecpay',
+            payment_method_title: 'ECPay',
+        },
+        billing: {
+            first_name: billingData?.firstName,
+            last_name: billingData?.lastName,
+            address_1: billingData?.address1,
+            address_2: billingData?.address2,
+            city: billingData?.city,
+            country: billingData?.country,
+            state: billingData?.state,
+            postcode: billingData?.postcode,
+            email: billingData?.email,
+            phone: billingData?.phone,
+            company: billingData?.company,
+        },
+        payment_method: 'ecpay',
+        payment_method_title: 'ECPay',
+        line_items: getCreateOrderLineItems( products ),
+    };
+}
+
+
+/**
  * Create order.
  *
  * @param {Object} orderData Order data.
@@ -106,21 +154,17 @@ export const getCreateOrderData = (order, products) => {
  *
  * @returns {Promise<{orderId: null, error: string}>}
  */
-export const createTheOrder = async ( orderData, setOrderFailedError, previousRequestError ) => {
+export const createTheOrder = async ( orderData ) => {
     let response = {
-        orderId: null,
+        orderId: '',
         total: '',
         currency: '',
-        error: ''
+        error: '',
+        orderKey:'',
+        date_created:'',
+        line_items:[]
     };
 
-    // Don't proceed if previous request has error.
-    if ( previousRequestError ) {
-        response.error = previousRequestError;
-        return response;
-    }
-
-    setOrderFailedError( '' );
 
     try {
         const request = await fetch( '/api/create-order', {
@@ -134,11 +178,14 @@ export const createTheOrder = async ( orderData, setOrderFailedError, previousRe
         const result = await request.json();
         if ( result.error ) {
             response.error = result.error
-            setOrderFailedError( 'Something went wrong. Order creation failed. Please try again' );
         }
-        response.orderId = result?.orderId ?? '';
-        response.total = result.total ?? '';
-        response.currency = result.currency ?? '';
+
+        response.orderId = result?.orderId.toString() ?? '';
+        response.total = result?.total ?? '';
+        response.currency = result?.currency ?? '';
+        response.orderKey = result.order_key ?? '';
+        response.date_created = result.date_created ?? '';
+        response.line_items = result.line_items ?? [];
 
     } catch ( error ) {
         // @TODO to be handled later.
@@ -147,3 +194,4 @@ export const createTheOrder = async ( orderData, setOrderFailedError, previousRe
 
     return response;
 }
+

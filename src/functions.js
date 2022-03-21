@@ -261,7 +261,6 @@ export const createCheckoutData = ( order ) => {
 
 	const checkoutData = {
 		clientMutationId: v4(),
-		// clientMutationId: "0001",
 		shipping: {
 			firstName: order?.shipping?.firstName,
 			lastName: order?.shipping?.lastName,

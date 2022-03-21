@@ -78,7 +78,7 @@ const defaultOptions = {
 // Apollo GraphQL client.
 const client = new ApolloClient({
 	link: middleware.concat( afterware.concat( createHttpLink({
-		uri: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/graphql`,
+		uri: `https://thelivablestudio.com/graphql`,
 		fetch: fetch
 	}) ) ),
 	cache: new InMemoryCache(),

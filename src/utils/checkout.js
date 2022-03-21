@@ -4,8 +4,9 @@ import {isEmpty, isArray} from 'lodash';
 // import { loadStripe } from "@stripe/stripe-js";
 
 import GET_STATES from "../queries/get-states";
-import {createTheOrder, getCreateOrderData} from "./order";
+import { createTheOrder, getCreateECpayOrderData, getCreateStripeOrderData} from "./order";
 import {clearTheCart} from "./cart";
+
 
 /**
  * Get states
@@ -70,8 +71,8 @@ export const handleCreateAccount = ( input, setInput, target ) => {
  */
 export const handleStripeCheckout = async (input, products, setRequestError, clearCartMutation, setIsStripeOrderProcessing, setCreatedOrderData) => {
     setIsStripeOrderProcessing(true);
-    const orderData = getCreateOrderData( input, products );
-    const createCustomerOrder = await createTheOrder( orderData, setRequestError,  '' );
+    const orderData = getCreateStripeOrderData( input, products ); // formatting orderData to fit Stripe requirement
+    const createCustomerOrder = await createTheOrder( orderData, setRequestError,  '' ); // put orderData on to customed wc-api create-order 
     const cartCleared = await clearTheCart( clearCartMutation, createCustomerOrder?.error );
     setIsStripeOrderProcessing(false);
 
@@ -89,6 +90,9 @@ export const handleStripeCheckout = async (input, products, setRequestError, cle
     return createCustomerOrder;
 }
 
+/**
+ * The Checkout page Stripe offers.
+ */
 const createCheckoutSessionAndRedirect = async ( products, input, orderId ) => {
     const sessionData = {
         success_url: window.location.origin + `/thank-you?session_id={CHECKOUT_SESSION_ID}&order_id=${orderId}`,
@@ -148,3 +152,44 @@ export const getMetaData = ( input, orderId ) => {
     // }
 
 }
+
+
+/**
+ * Handle ECpay checkout.
+ *
+ * 1. Create Formatted Order data.
+ * 2. Create Order using Next.js create-order endpoint.
+ * 3. Clear the cart session.
+ * 4. On success set show stripe form to true
+ *
+ * @param input
+ * @param products
+ * @param setRequestError
+ * @param setShowStripeForm
+ * @param clearCartMutation
+ * @param setIsStripeOrderProcessing
+ *
+ */
+ export const handleECpayCheckout = async (input, products, setRequestError, clearCartMutation, setIsECPayOrderProcessing, setCreatedOrderData) => {
+    setIsECPayOrderProcessing(true);
+    // formatting orderData to fit wc-rest-api /orders requirement
+    const orderData = getCreateECpayOrderData( input, products ); 
+    // wc rest api /orders
+    const createECpayCustomerOrder = await createTheOrder( orderData ); 
+    const cartCleared = await clearTheCart( clearCartMutation, createECpayCustomerOrder?.error );
+    setIsECPayOrderProcessing(false);
+
+
+    if ( isEmpty( createECpayCustomerOrder?.orderId ) || cartCleared?.error ) {
+    // if (  cartCleared?.error ) {
+        console.log('createECpayCustomerOrder Error');
+        setRequestError('Clear cart failed')
+    	return null;
+    }
+
+    // setCreatedOrderData(createECpayCustomerOrder); //  is not really being used in checkoutForm.js?
+
+    return createECpayCustomerOrder;
+
+}
+

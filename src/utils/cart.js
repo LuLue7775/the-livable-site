@@ -12,7 +12,6 @@ export const clearTheCart = async (clearCartMutation, previousRequestError) => {
         cartCleared: false,
         error: ''
     };
-
     // Don't proceed if previous request has error.
     if ( previousRequestError ) {
         response.error = previousRequestError;
@@ -28,7 +27,6 @@ export const clearTheCart = async (clearCartMutation, previousRequestError) => {
                 },
             },
         } );
-
         response.cartCleared = data?.removeItemsFromCart?.cartItems.length;
 
     } catch ( err ) {

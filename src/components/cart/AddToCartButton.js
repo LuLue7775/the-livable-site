@@ -79,7 +79,7 @@ const AddToCart = (props) => {
                     onClick={handleAddToCartClick}
                     className={cx(
                         'font-serif-ch px-3 py-1 rounded-sm mr-3 text-sm border-solid border ',
-                        {'custom-btn custom-btn-brown ': !addToCartLoading},
+                        {'custom-btn custom-btn-hover ': !addToCartLoading},
                         {'opacity-50 cursor-not-allowed': addToCartLoading}
                     )}
                 >
@@ -89,7 +89,7 @@ const AddToCart = (props) => {
             {showViewCart ? (
                 <Link href="/cart">
                     <button
-                        className="font-serif-ch px-3 py-1 rounded-sm text-sm border-solid border inline-block custom-btn custom-btn-brown hover:text-green-1000">
+                        className="font-serif-ch px-3 py-1 rounded-sm text-sm border-solid border inline-block custom-btn custom-btn-hover hover:text-green-1000">
                         View Cart
                     </button>
                 </Link>

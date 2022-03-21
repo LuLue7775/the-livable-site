@@ -30,8 +30,8 @@ const Cart = ( ) => {
 	 
 	return (
         <>
-            <div className="fixed w-screen h-screen opacity-50 z-0"> 
-            	<Image src='/bg.jpg' alt="background" layout="fill" />
+            <div className="fixed top-0 w-reset-screen h-screen opacity-90 z-0"> 
+                <Image className="object-cover" src='/lobby.png' alt="background" layout="fill" />
             </div>
             <div className="relative z-50 ">
                 <Header/>

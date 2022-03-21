@@ -109,11 +109,6 @@ const CartItemsContainer = () => {
 		<div className="cart product-cart-container container mx-auto my-32 px-4 xl:px-40 font-serif-ch">
 			{ cart ? (
 				<div className="woo-next-cart-wrapper container mx-auto">
-					{/* <div className="cart-Header grid grid-cols-2 gap-4"> */}
-						{/* <h1 className="text-2xl mb-5 uppercase">Cart</h1> */}
-
-					{/* </div> */}
-
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-0 mb-5">
 						<div className="md:col-span-2 ">
 							{ cart.products.length && (
@@ -131,7 +126,7 @@ const CartItemsContainer = () => {
 
 							{/*Clear entire cart*/}
 							<div className="p-4">
-								<button className="px-4 py-1 bg-transparent border border-gray-600 text-gray-600 rounded-sm w-auto" onClick={ ( event ) => handleClearCart( event ) } disabled={ clearCartProcessing }>
+								<button className="px-4 py-1 bg-transparent border border-white text-white rounded-sm w-auto" onClick={ ( event ) => handleClearCart( event ) } disabled={ clearCartProcessing }>
 									<span className="woo-next-cart">Clear Cart</span>
 									<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path strokeLinecap="square" strokeLinecap="square" strokeWidth="1" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z" />
@@ -144,24 +139,19 @@ const CartItemsContainer = () => {
 
 
 						{/*Cart Total*/ }
-						<div className="row woo-next-cart-total-container border border-gray-600 rounded-sm p-5 text-right">
-								{/* <h2 className="text-2xl">Cart Total</h2> */}
+						<div className="row cart-total-container border border-green-light rounded-sm p-5 text-right">
 								<table className="table table-hover mb-5">
 									<tbody>
-									<tr className="table-light flex flex-col">
-										<td className="woo-next-cart-element-total text-2xl font-normal">Subtotal</td>
-										<td className="woo-next-cart-element-amt text-xl font-bold font-body">{ ( 'string' !== typeof cart.totalProductsPrice ) ? cart.totalProductsPrice.toFixed(2) : cart.totalProductsPrice }</td>
+									<tr className="table-light flex flex-col text-white">
+										<td className="text-2xl font-normal">Subtotal</td>
+										<td className="text-xl font-bold font-body">{ ( 'string' !== typeof cart.totalProductsPrice ) ? cart.totalProductsPrice.toFixed(2) : cart.totalProductsPrice }</td>
 									</tr>
-									{/* <tr className="table-light">
-										<td className="woo-next-cart-element-total">Total</td>
-										<td className="woo-next-cart-element-amt">{ ( 'string' !== typeof cart.totalProductsPrice ) ? cart.totalProductsPrice.toFixed(2) : cart.totalProductsPrice }</td>
-									</tr> */}
 									</tbody>
 								</table>
 								
 								<Link href="/checkout">
-									<button className="border custom-btn custom-btn-brown px-5 py-3 my-1 rounded-lg w-full ">
-										<span className="woo-next-cart-checkout-txt">Checkout</span>
+									<button className="border custom-btn custom-btn-hover text-white px-5 py-3 my-1 rounded-lg w-full ">
+										<span >Checkout</span>
 										<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 inline-block ml-3" viewBox="0 0 20 20" fill="currentColor">
 										<path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clipRule="evenodd" />
 										</svg>
@@ -171,7 +161,7 @@ const CartItemsContainer = () => {
 					</div>
 
 					{/* Display Errors if any */}
-					{ requestError ? <div className="row woo-next-cart-total-container mt-5"> { requestError } </div> : '' }
+					{ requestError ? <div className="row cart-total-container mt-5"> { requestError } </div> : '' }
 				</div>
 			) : (
 				<div className="container mx-auto my-32 px-4 xl:px-0">

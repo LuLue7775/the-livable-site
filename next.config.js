@@ -6,7 +6,9 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true'
   })
 
+
 module.exports = withBundleAnalyzer({
+    crossOrigin: 'anonymous',
     reactStrictMode: true,
 
     /**
@@ -36,6 +38,16 @@ module.exports = withBundleAnalyzer({
 
     //     return config
     //   },
+    webpack(config) {
+        config.resolve.fallback = {
+          ...config.resolve.fallback, // if you miss it, all the other options in fallback, specified
+            // by next.js will be dropped. Doesn't make much sense, but how it is
+          fs: false, // the solution
+        };
+        // config.infrastructureLogging = { debug: /PackFileCache/ };    
+        return config;
+      },
+
     webpackDevMiddleware: (config) => {
         config.watchOptions = {
             poll: 1000,

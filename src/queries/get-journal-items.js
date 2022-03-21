@@ -115,3 +115,33 @@ query GET_JOURNAL_SLUGS {
 }  
 `;
 
+
+export const GET_ALL_JOURNALS = gql`
+query GET_ALL_JOURNALS {
+  posts(first: 10, after: "") {
+    nodes {
+      title
+      id
+      slug
+      databaseId
+      excerpt
+      featuredImage {
+        node {
+          id
+          sourceUrl
+          srcSet
+          slug
+          title
+          uri
+          altText
+        }
+      }
+      categories {
+        nodes {
+          name
+        }
+      }
+    }
+  }
+}
+`

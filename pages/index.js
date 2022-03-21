@@ -7,17 +7,21 @@ import { MobileDeviceContext } from '../src/components/context/AppContext';
 
 import LandingPage from '../src/components/home/Landingpage';
 
-
 export default function Home ( ) {
+  
+	const pageWrap = useRef(null);
+    useEffect(() => {
+        gsap.to(pageWrap.current, {opacity:1, duration:2, delay:1 }) // opening fade
+    }, []);
 
 	const isMobileDevice = useContext( MobileDeviceContext ) ;
 
 /**
- * Determine either click or touch. Only checking this on landing page at the moment.
+ * preventDefault on mobile. Only checking this on landing page at the moment.
  */
     const LandingRef = useRef(null);
     useEffect(()=> {
-		if( isMobileDevice ) {
+		if( isMobileDevice!==false ) {
 			LandingRef.current.addEventListener('touchend',function(event){
 				if (event.cancelable) event.preventDefault();
 			}, false );
@@ -25,20 +29,18 @@ export default function Home ( ) {
 		}
     }, [isMobileDevice]);
 
-
+	
 	
 	return (
-		<>
+		<div ref={pageWrap} className="pageWrap">
 			<div className="relative z-50">
 				<Header/>
 			</div>
-			<div className="fixed right-0 w-screen h-screen opacity-10 z-10"> 
-            	<Image src='/noise_lg.png' alt="background" layout="fill" />
-            </div>
-            <div ref={LandingRef} className="front-wrapper overflow-hidden">
+
+			<div ref={LandingRef} className="front-wrapper overflow-hidden"> 
 				<LandingPage/>  
 			</div>
-		</>
+		</div>
 	)
 };
 

@@ -6,6 +6,8 @@ import ArrowSm from "../svg-icons/ArrowSm";
 import { useSwipeable } from "react-swipeable";
 import { MenuContext } from "../context/AppContext";
 
+import TextRoundPath from "../svg-icons/TextRoundPath";
+
 /** url: /journal */
 const JournalCatsContainer = ({ data, screenSize, imageHeight, imageBottom, imageMovement }) => {
 
@@ -39,9 +41,10 @@ useEffect(() => {
  const handlers = useSwipeable({
     onSwipedUp: () => setScrollState(1),
     onSwipedDown: () => setScrollState(-1),
+    preventDefaultTouchmoveEvent: false,  // call e.preventDefault *See Details*
+    trackTouch: true,                     // track touch input
+    trackMouse: false,                    // track mouse input
 });
-
-
 /*------------------------------------------------------------------*/ 
 
 /**
@@ -61,85 +64,85 @@ useEffect(() => {
         }
     };
 
+    const rotateRef = useRef(null)
+
      useEffect(() => { 
              if ( 1 === scrollState ) {
-                 if ( subcatsData.length-1 > scrollPage ) {
-                     if ( scrollPage < subcatsData.length-1 ) {
-                         gsap.to(subcatTitleRefs.current[scrollPage], {
-                             y: "-=300",
-                             autoAlpha: 0
-                         });
-                         gsap.fromTo( subcatContainersRef.current[scrollPage], {
-                             autoAlpha:1
-                         },{
-                             y: () => `-=  ${screenSize.height}`,
-                             ease: "expo",
-                             delay: 0.4,
-                             duration:1,
-                             autoAlpha:0
- 
-                         });
-                         setscrollPage( ( prev ) => ( prev + 1) );
-                     }
- 
-                 }
+                if ( scrollPage < subcatsData.length-1 ) {
+                    gsap.to(subcatTitleRefs.current[scrollPage], {
+                        y: "-=300",
+                        autoAlpha: 0
+                    });
+                    gsap.fromTo( subcatContainersRef.current[scrollPage], {
+                        autoAlpha:1
+                    },{
+                        y: () => `-=  ${screenSize.height}`,
+                        ease: "expo",
+                        delay: 0.4,
+                        duration:1,
+                        autoAlpha:0
+
+                    });
+
+                    setscrollPage( ( prev ) => ( prev + 1) );
+                }
  
              } else if (0 > scrollState) {
                  if ( 0 < scrollPage ) {
-                     if ( scrollPage > 0 ) {
-                         gsap.to(subcatTitleRefs.current[scrollPage-1], {
-                             y: "+=300",
-                         });
-                         gsap.to(subcatTitleRefs.current[scrollPage-1], {
-                             delay: 0.6,
-                             autoAlpha: 1,
-                         });
-                         gsap.to( subcatContainersRef.current[scrollPage-1], {
-                             y: () => `+=  ${screenSize.height}`,
-                             ease: "expo",
-                             delay: 0.4,
-                             duration:1,
-                             autoAlpha:1
-                         });
-                         setscrollPage( ( prev ) => ( prev - 1) );
-                     }
-                 }
+                    gsap.to(subcatTitleRefs.current[scrollPage-1], {
+                        y: "+=300",
+                    });
+                    gsap.to(subcatTitleRefs.current[scrollPage-1], {
+                        delay: 0.6,
+                        autoAlpha: 1,
+                    });
+                    gsap.to( subcatContainersRef.current[scrollPage-1], {
+                        y: () => `+=  ${screenSize.height}`,
+                        ease: "expo",
+                        delay: 0.4,
+                        duration:1,
+                        autoAlpha:1
+                    });
+
+                    setscrollPage( ( prev ) => ( prev - 1) );
+                }
              }
  
          return () => setScrollState(null);
        }, [scrollState]);
 
 
-/**
- *  BLURRY BG WHEN MENU CLICKED
- */    
- const subcatBGRef = useRef([]);
- const addsubcatBGToRefs = (el) => {
-     if ( el && !subcatBGRef.current.includes(el) ) {
-        subcatBGRef.current.push(el);
-     }
- };
- const [ isMenuVisible, setMenuVisibility ] = useContext( MenuContext );
+    /**
+     *  BLURRY BG WHEN MENU CLICKED
+     */    
+    const subcatBGRef = useRef([]);
+    const addsubcatBGToRefs = (el) => {
+        if ( el && !subcatBGRef.current.includes(el) ) {
+            subcatBGRef.current.push(el);
+        }
+    };
+    const [ isMenuVisible, setMenuVisibility ] = useContext( MenuContext );
 
- useEffect(()=> {
-    
-    subcatBGRef.current.forEach( (page, i ) => {
-        if (isMenuVisible) {
-            page.className += (' blur-bg');
-         } else {
-            page.className = `bg-subcat-bg${i%3} subcat `
-         }
-    });
+    useEffect(()=> {
+        
+        subcatBGRef.current.forEach( (page, i ) => {
+            if (isMenuVisible) {
+                page.className += (' blur-bg');
+            } else {
+                page.className = `bg-subcat-bg${i%3} subcat `
+            }
+        });
 
- }, [isMenuVisible]);
+    }, [isMenuVisible]);
 
     
     return (
+        <>
         <div  className="screen-container" {...handlers} >
         {    
         subcatsData ? subcatsData.map( (item, i) => 
             <div key={i} ref={addsubcatContainersToRefs} className={` subcat-container${i} z-${6-i}0 subcat-containers absolute`} > 
-                <div ref={addsubcatBGToRefs} className={`bg-subcat-bg${i%3} subcat `}>
+                <div ref={addsubcatBGToRefs} className={`bg-subcat-bg${i%2} subcat `}>
                     <JournalCatsImageBorder/>
                     <div className="subcat-wrapper-slide w-5/4 ">
                         <JournalCatsImage item={item} i={i} scrollState={scrollState} scrollPage={scrollPage} subcatsData={subcatsData} imageHeight={imageHeight} imageBottom={imageBottom} imageMovement={imageMovement}/>
@@ -156,20 +159,22 @@ useEffect(() => {
                         <p dangerouslySetInnerHTML={ { __html: item.description, } }/>  
                     </div>
                     <Link href={`/journal/${item?.slug}`} >
-                        <a className=" visible md:invisible absolute left-1/4 bottom-12 cursor-pointer opacity-75 text-gray-900 text-xl font-body">
+                        <a className=" visible md:invisible absolute left-1/4 bottom-12 cursor-pointer opacity-75 text-gray-900 text-base sm:text-xl font-body">
                              <span >(tap to discover)</span>
                         </a>
                     </Link>
-                    <div className="absolute right-12 md:right-32 top-32 text-white font-serif "> Nr. {i+1}</div>
+                    <div className="absolute right-12 md:right-32 top-32 text-white font-serif "> No. {i+1}</div>
                     <div className="absolute right-16 md:right-32 bottom-32 ">
                         <ArrowSm/>
                     </div>
+
                     <p className="vertical-text-scroll absolute right-12 md:right-32 bottom-2 opacity-75 text-gray-900 text-sm md:text-base font-bold font-body"><span>Scroll</span></p>
                 </div>
             </div>            
             
         ) : ''}
         </div>
+        </>
         )
     }
     

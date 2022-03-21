@@ -7,7 +7,8 @@ import { useRouter } from "next/router";
 import { useEffect, useContext, useRef } from 'react';
 import { MenuContext } from "../src/components/context/AppContext";
 
-const Checkout = ( props ) => {
+
+const Checkout = ( { countriesData } ) => {
 
 	const router = useRouter()
 
@@ -15,7 +16,7 @@ const Checkout = ( props ) => {
         return <div>Loading...</div>
     }
 
-	const { countriesData } = props || {};
+
 
 /**
  *  BLURRY BG WHEN MENU CLICKED
@@ -33,18 +34,17 @@ const Checkout = ( props ) => {
 	 }, [isMenuVisible]);    
  
 	return(
-		<>
-			<div className="fixed w-screen h-screen opacity-50 z-0"> 
-				<Image src='/bg.jpg' alt="background" layout="fill" />
-			</div>
+		 <>
+            <div className="fixed top-0 w-reset-screen h-screen opacity-90 z-0"> 
+                <Image className="object-cover" src='/lobby.png' alt="background" layout="fill" />
+            </div>
 			<div className="relative z-50 ">
 				<Header />
 			</div>	
 			<div ref={background} className="absolute z-30 left-0 right-0 checkout container mx-auto my-32 px-4 xl:px-0">
-				<h1 className="mb-5 text-2xl uppercase font-serif-ch">Checkout Page</h1>
 				<CheckoutForm countriesData={ countriesData ?? {} }/>
 			</div>
-		</>
+		 </> 	
 	)
 
 };
@@ -52,6 +52,7 @@ const Checkout = ( props ) => {
 export default Checkout;
 
 export async function getStaticProps() {
+
 	const { data } = await client.query({
 		query: GET_COUNTRIES_AND_MENUSUBCATS
 	});

@@ -9,7 +9,7 @@ const Address = ({input, countries, states, handleOnChange, isFetchingStates, is
 
     return (
         <>
-            <div className="flex flex-wrap overflow-hidden sm:-mx-3">
+            <div className="flex flex-wrap overflow-hidden sm:-mx-3 ">
                 <InputField
                     name="firstName"
                     inputValue={input?.firstName}
@@ -41,12 +41,12 @@ const Address = ({input, countries, states, handleOnChange, isFetchingStates, is
                 containerClassNames="mb-4"
             />
             {/* Country Selection*/}
-            <CountrySelection
+            {/* <CountrySelection
                 input={input}
                 handleOnChange={handleOnChange}
                 countries={countries}
                 isShipping={isShipping}
-            />
+            /> */}
             <InputField
                 name="address1"
                 inputValue={input?.address1}
@@ -58,7 +58,7 @@ const Address = ({input, countries, states, handleOnChange, isFetchingStates, is
                 isShipping={isShipping}
                 containerClassNames="mb-4"
             />
-            <InputField
+            {/* <InputField
                 name="address2"
                 inputValue={input?.address2}
                 handleOnChange={handleOnChange}
@@ -67,7 +67,7 @@ const Address = ({input, countries, states, handleOnChange, isFetchingStates, is
                 errors={errors}
                 isShipping={isShipping}
                 containerClassNames="mb-4"
-            />
+            /> */}
             <InputField
                 name="city"
                 required

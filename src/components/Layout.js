@@ -4,16 +4,8 @@
  */
 import { AppProvider } from "./context/AppContext";
 import client from "./ApolloClient";
-import Router from "next/router";
-import NProgress from "nprogress";
 import { ApolloProvider } from "@apollo/client";
 import { useEffect } from 'react';
-
-import { Provider } from 'next-auth/client';
-
-Router.events.on("routeChangeStart", () => NProgress.start());
-Router.events.on("routeChangeComplete", () => NProgress.done());
-Router.events.on("routeChangeError", () => NProgress.done());
 
 
 const Layout = (props) => {
@@ -30,7 +22,6 @@ const Layout = (props) => {
   return (
     
     <AppProvider>
-      <Provider> 
         <ApolloProvider client={client}>
           <div>
             {/* <Header /> */}
@@ -38,7 +29,6 @@ const Layout = (props) => {
             {/* <Footer /> */}
           </div>
         </ApolloProvider>
-      </Provider>
     </AppProvider>
     
   );

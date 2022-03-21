@@ -43,7 +43,8 @@ const updateOrder = async ( newStatus, orderId, transactionId = '' ) => {
     }
 
     try {
-        const {data} = await api.put( `orders/${ orderId }`, newOrderData );
+        // tell woocommerce rest api that payment is made or not. 
+        const {data} = await api.put( `orders/${ orderId }`, newOrderData ); 
         console.log( '✅ Order updated data', data );
     } catch (ex) {
         console.error('Order creation error', ex);
@@ -79,7 +80,7 @@ const handler = async (req, res) => {
         //     }
         // }
 
-        res.json({ received: true });
+        res.json({ received: true });  // res to stripe?
     } else {
         res.setHeader("Allow", "POST");
         res.status(405).end("Method Not Allowed");
