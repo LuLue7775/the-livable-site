@@ -12,6 +12,7 @@ import LineIndex from "../../src/components/svg-icons/Line-index";
 import JournalCatsContainer from "../../src/components/journal/JournalCatsContainer";
 import { MobileDeviceContext } from "../../src/components/context/AppContext";
 import JournalSubcat from "../../src/components/journal";
+import GridLines from '../../src/components/GridLines';
 
 export default function Journal( { journals } ) {
     const router = useRouter()
@@ -20,6 +21,11 @@ export default function Journal( { journals } ) {
     }
 
     const isMobileDevice = useContext( MobileDeviceContext );
+
+	const screenSize = useScreenSize();
+    useEffect(()=>{
+        return () => { if( isMobileDevice === false ){ router.reload(); } } // only reload when resizing on desktop
+    }, [screenSize]);
 
 /**
  * useScrollDirection 
@@ -50,7 +56,6 @@ export default function Journal( { journals } ) {
  */
     const [ scrollState, setScrollState ] = useState(null); 
     const [ activeJournal, setJournal ] = useState(0);
-    const screenSize = useScreenSize();
 
     const journalContainersRef = useRef([]);
     const addjournalContainersToRefs = (el) => {
@@ -100,6 +105,8 @@ export default function Journal( { journals } ) {
             <div className="relative z-80 ">
                 <Header/>
             </div>
+                <GridLines></GridLines>
+
 
             <div className="max-w-reset-screen h-reset-screen z-10 pb-10"> 
                 { isMobileDevice===false 
@@ -120,7 +127,7 @@ export default function Journal( { journals } ) {
                                     ? i===0 
                                         ? 'first-journal absolute' :'journals-containers absolute'  
                                     : 'relative journals-containers-mobile'} 
-                                    grid grid-cols-4 z-20 `}>   
+                                    grid grid-cols-4 z-20 overscroll-contain`}>   
     
                                     <JournalSubcat journal={journal} i={i} 
                                         journalCategorySlug={journal?.categories?.nodes?.[0].name.toLowerCase()}  />

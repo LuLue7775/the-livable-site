@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next",
+    "dev": "next dev -p 1234",
     "build": "next build",
     "start": "next start ",
     "analyze": "cross-env ANALYZE=true next build",
@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.16",
+    "@babel/runtime": "^7.17.8",
     "@next/bundle-analyzer": "^11.1.2",
     "@stripe/stripe-js": "^1.14.0",
     "@svgr/cli": "^5.5.0",
