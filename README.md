@@ -2,6 +2,7 @@
 This project is an ecommerce website furnished with 3D background created with blender and Gsap animation. Performance needed to be tuned. 
 Beside the artistic designs part, this project is intended to be an example or boilerplate to help my other ecommerce site structure.
 
+![Alt Text](https://media1.giphy.com/media/MbWQ2OH29qq9M0HmMY/giphy.gif)
 
 ![Alt Text](https://media1.giphy.com/media/qujpEyZSDacisHfz9C/giphy.webp)
 
